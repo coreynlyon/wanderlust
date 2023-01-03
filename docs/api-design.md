@@ -256,7 +256,7 @@
     }
     ```
 
-### Update an Acvitity
+### Update an Activity
 * Endpoint path: /activity/{id}
 * Endpoint method: PUT
 
@@ -287,7 +287,7 @@
     }
     ```
 
-### Delete an Acvitity
+### Delete an Activity
 * Endpoint path: /activity/{id}
 * Endpoint method: DELETE
 
