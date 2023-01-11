@@ -1,8 +1,10 @@
 from fastapi import FastAPI
+from routers import itineraries
 from fastapi.middleware.cors import CORSMiddleware
 import os
 
 app = FastAPI()
+app.include_router(itineraries.router)
 
 app.add_middleware(
     CORSMiddleware,

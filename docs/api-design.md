@@ -43,7 +43,7 @@
         "destination": string,
         "start_date": date,
         "end_date": date,
-        "view_option": string,
+        <!-- "view_option": string, -->
         "travel_buddy": string,
         "itinerary_id": number
     }
@@ -368,4 +368,3 @@
         "message": string
     }
     ```
- 
