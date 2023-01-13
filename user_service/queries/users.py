@@ -61,32 +61,6 @@ class UserQueries:
             return {"message": "Could not get that account"}
 
 
-    # list all users for admin
-    def get_all_users(self):
-        try:    
-            with pool.connection() as conn:
-                with conn.cursor() as cur:
-                    cur.execute(
-                        """
-                        SELECT id, first_name, last_name, 
-                            email
-                        FROM users
-                        ORDER BY last_name, first_name;
-                    """
-                    )
-                    return [
-                    UserOut(
-                        id=record[0],
-                        first_name=record[1],
-                        last_name=record[2],
-                        email=record[3],
-                    )
-                    for record in cur
-                ]
-        except Exception as e:
-            print(e)
-            return {"message": "Could not get all accounts"}
-
 
 
 
@@ -159,6 +133,34 @@ class UserQueries:
             email=record[3],
             hashed_password=record[4],
         )
+
+
+    # # list all users for admin
+    # def get_all_users(self):
+    #     try:    
+    #         with pool.connection() as conn:
+    #             with conn.cursor() as cur:
+    #                 cur.execute(
+    #                     """
+    #                     SELECT id, first_name, last_name, 
+    #                         email
+    #                     FROM users
+    #                     ORDER BY last_name, first_name;
+    #                 """
+    #                 )
+    #                 return [
+    #                 UserOut(
+    #                     id=record[0],
+    #                     first_name=record[1],
+    #                     last_name=record[2],
+    #                     email=record[3],
+    #                 )
+    #                 for record in cur
+    #             ]
+    #     except Exception as e:
+    #         print(e)
+    #         return {"message": "Could not get all accounts"}
+
 
 
     # def update_user(
