@@ -11,7 +11,7 @@ def create_checklist(checklist: ChecklistIn):
 def view_checklist(checklist: ChecklistIn):
     pass
 
-@router.update("/checklist")
+@router.put("/checklist")
 def update_checklist(checklist: ChecklistIn):
     pass
 
