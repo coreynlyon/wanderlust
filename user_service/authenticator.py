@@ -26,14 +26,12 @@ class UserAuthenticator(Authenticator):
     def get_hashed_password(self, user: UserOutWithPassword):
         # Return the encrypted password value from your
         # account object
-       print(user,"-------line 29")
        return user.hashed_password
 
 
     def get_account_data_for_cookie(self, user: UserOut):
         # Return the username and the data for the cookie.
         # You must return TWO values from this method.
-        print(user, "-----------36")
         return user.email, UserOut(**user.dict())
         
 

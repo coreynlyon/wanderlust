@@ -52,7 +52,6 @@ class UserQueries:
                         [email],
                     )
                     record = result.fetchone()
-                    print(record, "record--------------line 50")
                     if record is None:
                         return None
                     return self.record_to_account_out(record)

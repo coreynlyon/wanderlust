@@ -86,7 +86,6 @@ def get_user(
     user_data: dict = Depends(authenticator.get_current_account_data),
 ):
     record = queries.get_user(user_id)
-    print(record, "record --------- line 60")
     if record is not None and user_data:
         return record
     else:
@@ -102,8 +101,6 @@ async def create_user(
     users: UserQueries = Depends(),
 ):
     hashed_password = authenticator.hash_password(info.password)
-    print(hashed_password,  "HASHED_PASSWORD_____________")
-    print(f'info {info}')
     try:
         user = users.create_user(info, hashed_password)
     except DuplicateAccountError:
