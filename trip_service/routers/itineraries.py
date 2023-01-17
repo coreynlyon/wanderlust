@@ -4,6 +4,7 @@ from queries.itineraries import ItineraryIn, ItineraryRepository, ItineraryOut, 
 
 router = APIRouter()
 
+
 @router.post("/itineraries", response_model=Union[ItineraryOut, Error])
 def create_itinerary(
     itinerary: ItineraryIn,
@@ -11,6 +12,7 @@ def create_itinerary(
     repo: ItineraryRepository = Depends(),
 ):
     return repo.create(itinerary)
+
 
 @router.get("/itineraries", response_model=Union[List[ItineraryOut], Error])
 def get_all(

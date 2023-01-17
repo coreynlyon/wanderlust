@@ -2,17 +2,20 @@ steps = [
     [
         # "Up" SQL statement
         """
-        CREATE TABLE itineraries (
+        CREATE TABLE trips (
 
             id SERIAL PRIMARY KEY NOT NULL,
-            notes TEXT NOT NULL,
-            trip_id INTEGER NOT NULL references trips,
-            activity_id INTEGER
+            destination VARCHAR(1000) NOT NULL,
+            start_date DATE NOT NULL,
+            end_date DATE NOT NULL,
+            attendees TEXT NOT NULL,
+            image_url TEXT,
+            itinerary_id INTEGER
         );
         """,
         # "Down" SQL statement
         """
-        DROP TABLE itineraries;
+        DROP TABLE trips;
         """
     ]
 ]
