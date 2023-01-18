@@ -1,4 +1,5 @@
 import Itinerary from "./ItineraryComponent";
+import Activities from "./ActivityComponent";
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import ItineraryForm from "./ItineraryForm";
@@ -23,12 +24,13 @@ function TripDetails() {
 
   return (
     <div>
-    {itinerary ? (
+      {itinerary ? (
         <div>
           <Itinerary />
+          <Activities />
         </div>
       ) : (
-          <ItineraryForm />
+        <ItineraryForm />
       )}
     </div>
   );
