@@ -4,12 +4,13 @@ import ErrorNotification from './ErrorNotification';
 import './App.css';
 
 function App() {
-  const [launch_info, setLaunchInfo] = useState([]);
+  const [trip_info, setTripInfo] = useState([]);
+  const [user_info, setUserInfo] = useState([]);
   const [error, setError] = useState(null);  
 
   useEffect(() => {
     async function getData() {
-      let url = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/api/launch-details`;
+      let url = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/api/launch-details`;
       console.log('fastapi url: ', url);
       let response = await fetch(url);
       console.log("------- hello? -------");
@@ -17,7 +18,25 @@ function App() {
 
       if (response.ok) {
         console.log("got launch data!");
-        setLaunchInfo(data.launch_details);
+        setTripInfo(data.launch_details);
+      } else {
+        console.log("drat! something happened");
+        setError(data.message);
+      }
+    }
+    getData();
+  }, [])
+ useEffect(() => {
+    async function getData() {
+      let url = `${process.env.REACT_APP_USER_SERVICE_API_HOST}/api/launch-details`;
+      console.log('fastapi url: ', url);
+      let response = await fetch(url);
+      console.log("------- hello? -------");
+      let data = await response.json();
+
+      if (response.ok) {
+        console.log("got it!");
+        setUserInfo(data.launch_details);
       } else {
         console.log("drat! something happened");
         setError(data.message);
@@ -26,11 +45,11 @@ function App() {
     getData();
   }, [])
 
-
   return (
     <div>
       <ErrorNotification error={error} />
-      <Construct info={launch_info} />
+      <Construct info={trip_info} />
+      <Construct info={user_info} />
     </div>
   );
 }

@@ -1,0 +1,21 @@
+1/9 
+
+Pushed wanderlust_draft to gitlab and we pulled to the other branches. Today we started on our own features, we were able to divide up the task based on points and I started on tables in migration folder and created queries and routers folder. Did some research on authenticator.
+
+
+1/10
+
+Completed the users authenticator, users in routers and queries backend (not yet tested), mapped out data structure models and compared mongo and postgres db. I did some research on the databases and continued conversation about which to use with SEIRs and other groups. Was preparing to present to group tomorrow and decide if we want postgres vs. mongodb
+
+
+1/11
+
+We decided to stick with postgres. The main reason we stuck with postgres is because we may want other users to access CRUD permissions which makes it more expensive for a mongo db. This was a stretch goal and we realize that you can use either databases and we already put in the leg work to create our app with postgres. I completed the authentication codes and am testing it. stayed up til 8:30 with matt and carter to try to trouble shoot and then we called it a day.
+
+1/12
+
+I am testing and trying to troubleshoot authentication. This has been very confusing since I am told one thing and than another. I comparing codes, and testing things on my own. Attended andrew's talk about auth but I was still confused on my errors. It kept saying either hashed_password or email was a atributeError. I couldn't catch what was wrong so i talked to folks who were successful. We put in a code that daniel had in his repo and I reformatted my code. It still did not work...
+
+1/13
+
+Had a one-on-one with andrew, turns out my table and name on users.py was not matching up. Also one of my attributes listed was mislabaled so it was out of index. After fixing the mispellings and errors, it ran succesfully. So creating a user, login, logout, edit, and delete user was working. Get a list of users was not working but we decided we did not need it. I was considering exploring roles to provide viewing access to other users as stated in our MVP.

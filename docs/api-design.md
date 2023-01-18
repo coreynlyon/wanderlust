@@ -126,8 +126,6 @@
     ```json
     {
         "destination": string,
-        "start_date": date,
-        "end_date": date,
         "description": string,
         "attendees": string,
         "notes": string,
@@ -159,8 +157,6 @@
             {
                 "itinerary_id": number,
                 "destination": string,
-                "start_date": date,
-                "end_date": date,
                 "description": string,
                 "attendees": string,
                 "notes": string,
@@ -181,8 +177,6 @@
     ```json
     {
         "destination": string,
-        "start_date": date,
-        "end_date": date,
         "description": string,
         "attendees": string,
         "notes": string,
@@ -196,8 +190,6 @@
     {
         "itinerary_id": number,
         "destination": string,
-        "start_date": date,
-        "end_date": date,
         "description": string,
         "attendees": string,
         "notes": string,
@@ -218,8 +210,6 @@
         "activity_name": string,
         "place": string,
         "notes": string,
-        "checklist_title": string,
-        "checklist_items": string,
     }
     ```
 
@@ -249,8 +239,6 @@
                 "activity_name": string,
                 "place": string,
                 "notes": string,
-                "checklist_title": string,
-                "checklist_items": string,
             }
         ]
     }
@@ -269,12 +257,10 @@
         "activity_name": string,
         "place": string,
         "notes": string,
-        "checklist_title": string,
-        "checklist_items": string,
     }
     ```
 
-* Response: Returns updated itinerary
+* Response: Returns updated activity
 * Response shape (JSON):
     ```json
     {
@@ -282,8 +268,6 @@
         "activity_name": string,
         "place": string,
         "notes": string,
-        "checklist_title": string,
-        "checklist_items": string,
     }
     ```
 
@@ -302,3 +286,86 @@
         "message": string
     }
     ```
+
+### Create Checklist
+* Endpoint path: /checklist/new
+* Endpoint method: POST
+
+* Headers:
+  * Authorization: Bearer token
+
+* Request shape (JSON):
+    ```json
+    {
+        "checklist_items": string
+    }
+    ```
+
+* Response: Indication of success or failure
+* Response shape (JSON):
+    ```json
+    {
+        "success": boolean,
+        "message": string
+    }
+    ```
+
+### Get List of Items In Checklist
+* Endpoint path: /checklist/list
+* Endpoint method: GET
+
+* Headers:
+  * Authorization: Bearer token
+
+* Response: A list of items in checklist
+* Response shape (JSON):
+    ```json
+    {
+        "checklists": [
+            {
+                "checklist_id": number,
+                "checklist_items": string,
+            }
+        ]
+    }
+    ```
+
+### Update a Checklist
+* Endpoint path: /checklist/{id}
+* Endpoint method: PUT
+
+* Headers:
+  * Authorization: Bearer token
+
+* Request shape (JSON):
+    ```json
+    {
+        "checklist_items": string,
+    }
+    ```
+
+* Response: Returns updated checklist
+* Response shape (JSON):
+    ```json
+    {
+        "checklist_id": number,
+        "checklist_items": string,
+    }
+    ```
+
+### Delete an Checklist
+* Endpoint path: /checklist/{id}
+* Endpoint method: DELETE
+
+* Headers:
+  * Authorization: Bearer token
+
+* Response: Indication of success or failure
+* Response shape (JSON):
+    ```json
+    {
+        "success": boolean,
+        "message": string
+    }
+    ```
+ 
