@@ -1,29 +1,24 @@
 from fastapi import FastAPI
+from authenticator import authenticator
+from routers import users
 from fastapi.middleware.cors import CORSMiddleware
 import os
 
 app = FastAPI()
 
+origins = [
+    "http://localhost:3000",
+    "http://localhost",
+    os.environ.get("CORS_HOST"),
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        os.environ.get("CORS_HOST", "http://localhost:3000")
-    ],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-
-@app.get("/api/launch-details")
-def launch_details():
-    return {
-        "launch_details": {
-            "year": 555,
-            "month": 1,
-            "day": "9",
-            "hour": 19,
-            "min": 0,
-            "tz:": "PST"
-        }
-    }
+app.include_router(users.router)
+app.include_router(authenticator.router)
