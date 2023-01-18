@@ -1,23 +1,18 @@
 from fastapi import FastAPI
-from authenticator import authenticator
 from fastapi.middleware.cors import CORSMiddleware
+from routers import trips, itineraries, reservations
 import os
 
-
 app = FastAPI()
+app.include_router(trips.router)
+app.include_router(itineraries.router)
+app.include_router(reservations.router)
 
-origins = [
-    "http://localhost:8000",
-    "http://localhost:3000",
-    os.environ.get("CORS_HOST", "REACT_APP_USERS_SERVICE_API_HOST"),
-]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=[os.environ.get("CORS_HOST", "http://localhost:3000")],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-app.include_router(authenticator.router)

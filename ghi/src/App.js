@@ -1,57 +1,25 @@
-import { useEffect, useState } from 'react';
-import Construct from './Construct.js'
-import ErrorNotification from './ErrorNotification';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import TripList from './TripList';
+import MainPage from './MainPage';
+import Nav from './Nav';
+import ItineraryForm from './ItineraryForm';
+import TripDetails from './TripDetails';
 
 function App() {
-  const [trip_info, setTripInfo] = useState([]);
-  const [user_info, setUserInfo] = useState([]);
-  const [error, setError] = useState(null);  
-
-  useEffect(() => {
-    async function getData() {
-      let url = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/api/launch-details`;
-      console.log('fastapi url: ', url);
-      let response = await fetch(url);
-      console.log("------- hello? -------");
-      let data = await response.json();
-
-      if (response.ok) {
-        console.log("got launch data!");
-        setTripInfo(data.launch_details);
-      } else {
-        console.log("drat! something happened");
-        setError(data.message);
-      }
-    }
-    getData();
-  }, [])
- useEffect(() => {
-    async function getData() {
-      let url = `${process.env.REACT_APP_USER_SERVICE_API_HOST}/api/launch-details`;
-      console.log('fastapi url: ', url);
-      let response = await fetch(url);
-      console.log("------- hello? -------");
-      let data = await response.json();
-
-      if (response.ok) {
-        console.log("got it!");
-        setUserInfo(data.launch_details);
-      } else {
-        console.log("drat! something happened");
-        setError(data.message);
-      }
-    }
-    getData();
-  }, [])
-
   return (
     <div>
-      <ErrorNotification error={error} />
-      <Construct info={trip_info} />
-      <Construct info={user_info} />
-    </div>
+      <BrowserRouter>
+        <Nav />
+        <div>
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/trips" element={<TripList />} />
+            <Route path="/itinerary" element={<ItineraryForm />} />
+            <Route path="/trip/:id" element={<TripDetails />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+      </div>
   );
 }
-
 export default App;
