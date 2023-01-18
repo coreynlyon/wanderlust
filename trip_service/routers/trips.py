@@ -4,10 +4,10 @@ from queries.trips import TripIn, TripRepository, TripOut, Error
 
 router = APIRouter()
 
+
 @router.post("/trips", response_model=Union[TripOut, Error])
 def create_trip(
     trip: TripIn,
-    response: Response,
     repo: TripRepository = Depends(),
 ):
     return repo.create(trip)

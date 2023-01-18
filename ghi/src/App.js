@@ -1,12 +1,16 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import TripForm from './TripForm';
 import TripList from './TripList';
 import MainPage from './MainPage';
-import ItineraryForm from './ItineraryForm';
-import ItineraryDetails from './ItineraryDetails';
 import Nav from './Nav';
+import ItineraryForm from './ItineraryForm';
+import TripDetails from './TripDetails';
+import ActivityForm from './ActivityForm.js';
+import ActivityList from './ActivityList.js';
+import MainPage from './MainPage.js';
 
 function App() {
+
+
 
   return (
     <div>
@@ -16,9 +20,10 @@ function App() {
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/trips" element={<TripList />} />
-            <Route path="/trips/new" element={<TripForm />} />
-            <Route path="/itineraries/new" element={<ItineraryForm />} />
-            <Route path="/itineraries/details" element={<ItineraryDetails/>}/>
+            <Route path="/itinerary" element={<ItineraryForm />} />
+            <Route path="/trip/:id" element={<TripDetails />} />
+            <Route path="/activities/" element={<ActivityList />} />
+            <Route path="/activities/new/" element={<ActivityForm />} />
           </Routes>
         </div>
       </BrowserRouter>

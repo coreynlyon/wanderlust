@@ -1,8 +1,9 @@
-# volumes:
 volumes:
   postgres-data:
     external: true
   pg-admin:
+    external: true
+  jwtdown-db-data:
     external: true
 services:
   pg-admin:
@@ -38,7 +39,7 @@ services:
     environment:
       DATABASE_URL: postgresql://user_service:password@postgres/user_service
       WAIT_HOSTS: postgres:5432
-      # SIGNING_KEY: ${SIGNING_KEY}
+      SIGNING_KEY: hackreactor123
 
   trip_service:
     build:
@@ -47,11 +48,7 @@ services:
     ports:
       - "8100:8000"
     volumes:
-      - ./trip_service:/app
-    environment:
-      DATABASE_URL: postgresql://trip_service:password@postgres/trip_service
-      WAIT_HOSTS: postgres:5432
-      # SIGNING_KEY: ${SIGNING_KEY}
+      - ./sample_service:/app
 
   ghi:
     image: node:lts-bullseye
@@ -66,5 +63,4 @@ services:
       NODE_ENV: development
       HOST: "0.0.0.0"
       PUBLIC_URL: http://localhost:3000
-      REACT_APP_TRIP_SERVICE_API_HOST: http://localhost:8100
-      REACT_APP_USER_SERVICE_API_HOST: http://localhost:8090
+      REACT_APP_SAMPLE_SERVICE_API_HOST: http://localhost:8000

@@ -3,15 +3,18 @@ from typing import Optional, List, Union
 from datetime import date
 from queries.pool import pool
 
+
 class Error(BaseModel):
     message: str
+
 
 class TripIn(BaseModel):
     destination: str
     start_date: date
     end_date: date
     attendees: str
-    itinerary_id: Optional[int]
+    image_url: Optional[str]
+
 
 class TripOut(BaseModel):
     id: int
@@ -19,7 +22,8 @@ class TripOut(BaseModel):
     start_date: date
     end_date: date
     attendees: str
-    itinerary_id: Optional[int]
+    image_url: Optional[str]
+
 
 class TripRepository:
     def get_one(self, trip_id: int) -> Optional[TripOut]:
@@ -36,18 +40,17 @@ class TripRepository:
                              , start_date
                              , end_date
                              , attendees
-                             , itinerary_id
+                             , image_url
                         FROM trips
                         WHERE id = %s
                         """,
-                        [trip_id]
+                        [trip_id],
                     )
                     record = result.fetchone()
                     if record is None:
                         return None
                     return self.record_to_trip_out(record)
-        except Exception as e:
-            print(e)
+        except Exception:
             return {"message": "Could not get that trip"}
 
     def delete(self, trip_id: int) -> bool:
@@ -61,11 +64,10 @@ class TripRepository:
                         DELETE FROM trips
                         WHERE id = %s
                         """,
-                        [trip_id]
+                        [trip_id],
                     )
                     return True
-        except Exception as e:
-            print(e)
+        except Exception:
             return False
 
     def update(self, trip_id: int, trip: TripIn) -> Union[TripOut, Error]:
@@ -81,7 +83,7 @@ class TripRepository:
                           , start_date = %s
                           , end_date = %s
                           , attendees = %s
-                          , itinerary_id = %s
+                          , image_url = %s
                         WHERE id = %s
                         """,
                         [
@@ -89,15 +91,12 @@ class TripRepository:
                             trip.start_date,
                             trip.end_date,
                             trip.attendees,
-                            trip.itinerary_id,
-                            trip_id
-                        ]
+                            trip.image_url,
+                            trip_id,
+                        ],
                     )
-                    # old_data = trip.dict()
-                    # return TripOut(id=trip_id, **old_data)
                     return self.trip_in_to_out(trip_id, trip)
-        except Exception as e:
-            print(e)
+        except Exception:
             return {"message": "Could not update that trip"}
 
     def get_all(self) -> Union[List[TripOut], Error]:
@@ -109,27 +108,18 @@ class TripRepository:
                     # Run our SELECT statement
                     result = db.execute(
                         """
-                        SELECT id, destination, start_date, end_date, attendees, itinerary_id
+                        SELECT id
+                             , destination
+                             , start_date
+                             , end_date
+                             , attendees
+                             , image_url
                         FROM trips
                         ORDER BY start_date;
                         """
                     )
-                    # result = []
-                    # for record in db:
-                    #     trip = TripOut(
-                    #         id=record[0],
-                    #         destination=record[1],
-                    #         start_date=record[2],
-                    #         end_date=record[3],
-                    #         attendees=record[4],
-                    #         itinerary_id=record[5],
-                    #     )
-                    #     result.append(trip)
-                    # return result
-
                     return [
-                        self.record_to_trip_out(record)
-                        for record in result
+                        self.record_to_trip_out(record) for record in result
                     ]
         except Exception as e:
             print(e)
@@ -145,7 +135,11 @@ class TripRepository:
                     result = db.execute(
                         """
                         INSERT INTO trips
-                            (destination, start_date, end_date, attendees, itinerary_id)
+                            (destination
+                            , start_date
+                            , end_date
+                            , attendees
+                            , image_url)
                         VALUES
                             (%s, %s, %s, %s, %s)
                         RETURNING id;
@@ -155,13 +149,10 @@ class TripRepository:
                             trip.start_date,
                             trip.end_date,
                             trip.attendees,
-                            trip.itinerary_id
-                        ]
+                            trip.image_url,
+                        ],
                     )
                     id = result.fetchone()[0]
-                    # Return new data
-                    # old_data = trip.dict()
-                    # return TripOut(id=id, **old_data)
                     return self.trip_in_to_out(id, trip)
         except Exception:
             return {"message": "Create did not work"}
@@ -177,5 +168,5 @@ class TripRepository:
             start_date=record[2],
             end_date=record[3],
             attendees=record[4],
-            itinerary_id=record[5],
+            image_url=record[5],
         )
