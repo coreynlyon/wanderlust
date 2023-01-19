@@ -1,5 +1,7 @@
 import Itinerary from "./ItineraryComponent";
-import { useParams } from 'react-router-dom';
+import Activities from "./ActivityComponent";
+import Checklist from "./ChecklistComponent";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ItineraryForm from "./ItineraryForm";
 
@@ -10,7 +12,7 @@ function TripDetails() {
 
   useEffect(() => {
     const fetchItinerary = async () => {
-      const url = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/itineraries/trip/${id}`;
+      const url = `http://localhost:8100/itineraries/trip/${id}`;
       const response = await fetch(url);
 
       if (response.ok) {
@@ -23,12 +25,14 @@ function TripDetails() {
 
   return (
     <div>
-    {itinerary ? (
+      {itinerary ? (
         <div>
           <Itinerary />
+          <Activities />
+          <Checklist />
         </div>
       ) : (
-          <ItineraryForm />
+        <ItineraryForm />
       )}
     </div>
   );

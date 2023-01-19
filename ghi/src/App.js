@@ -1,17 +1,13 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import TripList from './TripList';
-import MainPage from './MainPage';
-import Nav from './Nav';
-import ItineraryForm from './ItineraryForm';
-import TripDetails from './TripDetails';
-import ActivityForm from './ActivityForm.js';
-import ActivityList from './ActivityList.js';
-import MainPage from './MainPage.js';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import TripList from "./TripList";
+import MainPage from "./MainPage";
+import Nav from "./Nav";
+import ItineraryForm from "./ItineraryForm";
+import TripDetails from "./TripDetails";
+import ActivityForm from "./ActivityForm.js";
+import ActivityList from "./ActivityList.js";
 
 function App() {
-
-
-
   return (
     <div>
       <BrowserRouter>
@@ -27,7 +23,7 @@ function App() {
           </Routes>
         </div>
       </BrowserRouter>
-      </div>
+    </div>
   );
 }
 export default App;
