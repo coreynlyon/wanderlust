@@ -29,7 +29,7 @@ function Activities() {
 			}
 		};
 		fetchActivity();
-	}, []);
+	}, [id]);
 
   const handleSubmit = async (event) => {
       event.preventDefault();
