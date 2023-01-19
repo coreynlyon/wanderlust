@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import TripModal from "./TripModal";
+import { Title } from "@mantine/core";
 
 function TripList() {
   const [trips, setTrips] = useState([]);
@@ -43,7 +44,9 @@ function TripList() {
   return (
     <div>
       <div className="container mt-3">
-        <h1>Your Trips</h1>
+        <Title className="mb-3">
+          Your Trips
+        </Title>
         <div className="row row-cols-1 row-cols-md-3 g-4">
           {trips.map((trip) => {
             return (
@@ -59,7 +62,9 @@ function TripList() {
                         alt={trip.destination}
                       />
                       <div className="card-body">
-                        <h5 className="card-title">{trip.destination}</h5>
+                        <Title order={3} className="card-title">
+                          {trip.destination}
+                        </Title>
                       </div>
                       <div className="card-footer">
                         <small className="text-muted">
