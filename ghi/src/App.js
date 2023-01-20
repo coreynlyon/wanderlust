@@ -8,9 +8,11 @@ import ActivityForm from "./ActivityForm.js";
 import ActivityList from "./ActivityList.js";
 
 function App() {
+  const domain = /https:\/\/[^/]+/;
+  const basename = process.env.PUBLIC_URL.replace(domain, '');
   return (
     <div>
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <Nav />
         <div>
           <Routes>
