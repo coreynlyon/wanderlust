@@ -112,7 +112,7 @@ export function HeroBullets() {
 
             </Group>
           </div>
-          <Image src="https://img.freepik.com/free-vector/online-app-tourism-traveler-with-mobile-phone-passport-booking-buying-plane-ticket_74855-10966.jpg?w=2000" />
+          <Image src="https://img.freepik.com/free-vector/online-app-tourism-traveler-with-mobile-phone-passport-booking-buying-plane-ticket_74855-10966.jpg?w=2000" alt="travel_pic"/>
         </div>
       </Container>
     </div>

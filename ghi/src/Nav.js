@@ -106,6 +106,3 @@ export default function Nav() {
     </Box>
   );
 }
-
-
-export default Nav;

@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 from typing import Optional, List, Union
-from datetime import date
 from queries.pool import pool
 
 
@@ -8,25 +7,19 @@ class Error(BaseModel):
     message: str
 
 
-class ActivityIn(BaseModel):
-    activity_name: str
-    place: str
-    date: date
-    notes: Optional[str]
+class ChecklistIn(BaseModel):
+    item_name: str
     trip_id: int
 
 
-class ActivityOut(BaseModel):
+class ChecklistOut(BaseModel):
     id: int
-    activity_name: str
-    place: str
-    date: date
-    notes: Optional[str]
+    item_name: str
     trip_id: int
 
 
-class ActivityRepository:
-    def get_one(self, activity_id: int) -> Optional[ActivityOut]:
+class ChecklistRepository:
+    def get_one(self, checklist_id: int) -> Optional[ChecklistOut]:
         try:
             # connect the database
             with pool.connection() as conn:
@@ -36,25 +29,22 @@ class ActivityRepository:
                     result = db.execute(
                         """
                         SELECT id
-                             , activity_name
-                             , place
-                             , date
-                             , notes
+                             , item_name
                              , trip_id
-                        FROM activities
+                        FROM checklists
                         WHERE id = %s
                         """,
-                        [activity_id],
+                        [checklist_id],
                     )
                     record = result.fetchone()
                     if record is None:
                         return None
-                    return self.record_to_activity_out(record)
+                    return self.record_to_checklist_out(record)
         except Exception as e:
             print(e)
-            return {"message": "Could not get that activity"}
+            return {"message": "Could not get that checklist"}
 
-    def delete(self, activity_id: int) -> bool:
+    def delete(self, checklist_id: int) -> bool:
         try:
             # connect the database
             with pool.connection() as conn:
@@ -62,10 +52,10 @@ class ActivityRepository:
                 with conn.cursor() as db:
                     db.execute(
                         """
-                        DELETE FROM activities
+                        DELETE FROM checklists
                         WHERE id = %s
                         """,
-                        [activity_id],
+                        [checklist_id],
                     )
                     return True
         except Exception as e:
@@ -73,8 +63,8 @@ class ActivityRepository:
             return False
 
     def update(
-        self, activity_id: int, activity: ActivityIn
-    ) -> Union[ActivityOut, Error]:
+        self, checklist_id: int, checklist: ChecklistIn
+    ) -> Union[ChecklistOut, Error]:
         try:
             # connect the database
             with pool.connection() as conn:
@@ -82,31 +72,21 @@ class ActivityRepository:
                 with conn.cursor() as db:
                     db.execute(
                         """
-                        UPDATE activities
-                        SET activity_name = %s
-                          , place = %s
-                          , date = %s
-                          , notes = %s
+                        UPDATE checklists
+                        SET item_name = %s
                           , trip_id = %s
                         WHERE id = %s
                         """,
-                        [
-                            activity.activity_name,
-                            activity.place,
-                            activity.date,
-                            activity.notes,
-                            activity.trip_id,
-                            activity_id,
-                        ],
+                        [checklist.item_name, checklist.trip_id, checklist_id],
                     )
-                    return self.activity_in_to_out(activity_id, activity)
+                    return self.checklist_in_to_out(checklist_id, checklist)
         except Exception as e:
             print(e)
-            return {"message": "Could not update that activity"}
+            return {"message": "Could not update that checklist"}
 
-    def get_act_by_trip_id(
+    def get_checklist_by_trip_id(
         self, trip_id: int
-    ) -> Union[List[ActivityOut], Error]:
+    ) -> Union[List[ChecklistOut], Error]:
         try:
             # connect the database
             with pool.connection() as conn:
@@ -116,26 +96,24 @@ class ActivityRepository:
                     result = db.execute(
                         """
                         SELECT id
-                             , activity_name
-                             , place
-                             , date
-                             , notes
+                             , item_name
                              , trip_id
-                        FROM activities
+                        FROM checklists
                         WHERE trip_id=%s
-                        ORDER BY date;
                         """,
                         [trip_id],
                     )
                     return [
-                        self.record_to_activity_out(record)
+                        self.record_to_checklist_out(record)
                         for record in result
                     ]
         except Exception as e:
             print(e)
-            return {"message": "Could not get activities with that trip id"}
+            return {
+                "message": "Could not get checklist item with that trip id"
+            }
 
-    def get_all(self) -> Union[List[ActivityOut], Error]:
+    def get_all(self) -> Union[List[ChecklistOut], Error]:
         try:
             # connect the database
             with pool.connection() as conn:
@@ -145,24 +123,20 @@ class ActivityRepository:
                     result = db.execute(
                         """
                         SELECT id
-                             , activity_name
-                             , place
-                             , date
-                             , notes
+                             , item_name
                              , trip_id
-                        FROM activities
-                        ORDER BY date;
+                        FROM checklists
                         """
                     )
                     return [
-                        self.record_to_activity_out(record)
+                        self.record_to_checklist_out(record)
                         for record in result
                     ]
         except Exception as e:
             print(e)
-            return {"message": "Could not get all activities"}
+            return {"message": "Could not get all checklists"}
 
-    def create(self, activity: ActivityIn) -> Union[ActivityOut, Error]:
+    def create(self, checklist: ChecklistIn) -> Union[ChecklistOut, Error]:
         try:
             # connect the database
             with pool.connection() as conn:
@@ -171,36 +145,30 @@ class ActivityRepository:
                     # Run our INSERT statement
                     result = db.execute(
                         """
-                        INSERT INTO activities
-                            (activity_name, place, date, notes, trip_id)
+                        INSERT INTO checklists
+                            (item_name, trip_id)
                         VALUES
-                            (%s, %s, %s, %s, %s)
+                            (%s, %s)
                         RETURNING id;
                         """,
                         [
-                            activity.activity_name,
-                            activity.place,
-                            activity.date,
-                            activity.notes,
-                            activity.trip_id,
+                            checklist.item_name,
+                            checklist.trip_id,
                         ],
                     )
                     id = result.fetchone()[0]
-                    return self.activity_in_to_out(id, activity)
+                    return self.checklist_in_to_out(id, checklist)
         except Exception:
             return {"message": "Create did not work"}
 
-    def activity_in_to_out(self, id: int, activity: ActivityIn):
-        old_data = activity.dict()
-        return ActivityOut(id=id, **old_data)
+    def checklist_in_to_out(self, id: int, checklist: ChecklistIn):
+        old_data = checklist.dict()
+        return ChecklistOut(id=id, **old_data)
 
-    def record_to_activity_out(self, record):
+    def record_to_checklist_out(self, record):
         print(record)
-        return ActivityOut(
+        return ChecklistOut(
             id=record[0],
-            activity_name=record[1],
-            place=record[2],
-            date=record[3],
-            notes=record[4],
-            trip_id=record[5],
+            item_name=record[1],
+            trip_id=record[2],
         )
