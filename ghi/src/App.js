@@ -10,25 +10,24 @@ import ActivityList from "./ActivityList.js";
 
 
 function App() {
+  const domain = /https:\/\/[^/]+/;
+  const basename = process.env.PUBLIC_URL.replace(domain, '');
   return (
-    // <AuthProvider>
-      // <GetToken />
-      <div>
-        <BrowserRouter>
-          <Nav />
-          <div>
-            <Routes>
-              <Route path="/" element={<MainPage />} />
-              <Route path="/trips" element={<TripList />} />
-              <Route path="/itinerary" element={<ItineraryForm />} />
-              <Route path="/trip/:id" element={<TripDetails />} />
-              <Route path="/activities/" element={<ActivityList />} />
-              <Route path="/activities/new/" element={<ActivityForm />} />
-            </Routes>
-          </div>
-        </BrowserRouter>
-      </div>
-    // </AuthProvider>
+    <div>
+      <BrowserRouter basename={basename}>
+        <Nav />
+        <div>
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/trips" element={<TripList />} />
+            <Route path="/itinerary" element={<ItineraryForm />} />
+            <Route path="/trip/:id" element={<TripDetails />} />
+            <Route path="/activities/" element={<ActivityList />} />
+            <Route path="/activities/new/" element={<ActivityForm />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </div>
   );
 }
 export default App;
