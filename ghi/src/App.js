@@ -7,23 +7,28 @@ import TripDetails from "./TripDetails";
 import ActivityForm from "./ActivityForm.js";
 import ActivityList from "./ActivityList.js";
 
+
+
 function App() {
   return (
-    <div>
-      <BrowserRouter>
-        <Nav />
-        <div>
-          <Routes>
-            <Route path="/" element={<MainPage />} />
-            <Route path="/trips" element={<TripList />} />
-            <Route path="/itinerary" element={<ItineraryForm />} />
-            <Route path="/trip/:id" element={<TripDetails />} />
-            <Route path="/activities/" element={<ActivityList />} />
-            <Route path="/activities/new/" element={<ActivityForm />} />
-          </Routes>
-        </div>
-      </BrowserRouter>
-    </div>
+    // <AuthProvider>
+      // <GetToken />
+      <div>
+        <BrowserRouter>
+          <Nav />
+          <div>
+            <Routes>
+              <Route path="/" element={<MainPage />} />
+              <Route path="/trips" element={<TripList />} />
+              <Route path="/itinerary" element={<ItineraryForm />} />
+              <Route path="/trip/:id" element={<TripDetails />} />
+              <Route path="/activities/" element={<ActivityList />} />
+              <Route path="/activities/new/" element={<ActivityForm />} />
+            </Routes>
+          </div>
+        </BrowserRouter>
+      </div>
+    // </AuthProvider>
   );
 }
 export default App;
