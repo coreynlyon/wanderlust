@@ -20,7 +20,7 @@ function Activities() {
 
   useEffect(() => {
 		const fetchActivity = async () => {
-            const url = `http://localhost:8100/activities/trip/${id}`;
+            const url = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/activities/trip/${id}`;
 			const response = await fetch(url);
 
 			if (response.ok) {
@@ -42,7 +42,7 @@ function Activities() {
           trip_id
         };
 
-      const activityUrl = "http://localhost:8100/activities/";
+      const activityUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/activities/`;
       const fetchConfig = {
           method: "post",
           body: JSON.stringify(data),
@@ -54,7 +54,7 @@ function Activities() {
       const response = await fetch(activityUrl, fetchConfig);
       if (response.ok) {
         setShow(false);
-        const reloadUrl = `http://localhost:8100/activities/trip/${id}`;
+        const reloadUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/activities/trip/${id}`;
         const reloadResponse = await fetch(reloadUrl);
         const newActivities = await reloadResponse.json();
         setActivities(newActivities);

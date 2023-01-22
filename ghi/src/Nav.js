@@ -63,11 +63,11 @@ export default function Nav() {
             {/* <a href="/" className={classes.link}>
               Old Home
             </a> */}
-            <NavLink to="/"> Home </NavLink>
+            <NavLink to="/" className={classes.link}> Home </NavLink>
             {/* <a href="/trips" className={classes.link}>
               View Trips
             </a> */}
-            <NavLink to="/trips"> View Trips </NavLink>
+            <NavLink to="/trips" className={classes.link}> View Trips </NavLink>
           </Group>
 
           <Group className={classes.hiddenMobile}>
