@@ -61,21 +61,20 @@ def test_create_trip():
     assert resp.status_code == 200
     assert actual == expected_post_resp
 
-    # clean up
+    # Clean up
     app.dependency_overrides = {}
 
 def test_get_trips():
+    # Arrange
     app.dependency_overrides[TripRepository] = MockTripQueries
 
+    # Act
     resp1 = client.get('/trips')
     actual = resp1.json()
 
+    # Assert
     assert resp1.status_code == 200
-    assert actual == { "trips": [trips[1]] }
+    assert actual == trips
 
-    # resp2 = client.get('/api/trips')
-    # actual2 = resp2.json()
-    # assert resp2.status_code == 200
-    # assert len(actual2['trips']) == 1
-
+    # Clean up
     app.dependency_overrides = {}
