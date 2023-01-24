@@ -10,7 +10,7 @@ expected_post_resp = {
     "start_date": "2023-01-20",
     "end_date": "2023-01-20",
     "attendees": "Frank",
-    "image_url": "https://www.state.gov/wp-content/uploads/2019/04/Japan-2107x1406.jpg",
+    "image_url": "https://www.state.gov/Japan-2107x1406.jpg",
 }
 
 trips = [
@@ -21,7 +21,7 @@ trips = [
         "start_date": "2023-01-18",
         "end_date": "2023-01-20",
         "attendees": "Nate, Caleb",
-        "image_url": "https://www.travelandleisure.com/thmb/91pb8LbDAUwUN_11wATYjx5oF8Q=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/new-york-city-evening-NYCTG0221-52492d6ccab44f328a1c89f41ac02aea.jpg",
+        "image_url": "https://www.travelandleisure.com/",
     },
     {
         "id": 3,
@@ -29,9 +29,10 @@ trips = [
         "start_date": "2023-01-18",
         "end_date": "2023-01-21",
         "attendees": "Bette, Corey",
-        "image_url": "https://media.istockphoto.com/id/938335974/photo/aerial-view-of-kualoa-area-of-oahu-hawaii.jpg?s=612x612&w=0&k=20&c=OqqkjtRGFffwCx5Ac4kyfO9AReN-wnc6hGW8jJp7vok=",
-    }
+        "image_url": "https://media.istockphoto.com/id/938335974/",
+    },
 ]
+
 
 class MockTripQueries:
     def create(self, new_trip):
@@ -49,12 +50,12 @@ def test_create_trip():
         "start_date": "2023-01-20",
         "end_date": "2023-01-20",
         "attendees": "Frank",
-        "image_url": "https://www.state.gov/wp-content/uploads/2019/04/Japan-2107x1406.jpg",
+        "image_url": "https://www.state.gov/Japan-2107x1406.jpg",
     }
     app.dependency_overrides[TripRepository] = MockTripQueries
 
     # Act
-    resp = client.post('/trips', json=req_body)
+    resp = client.post("/trips", json=req_body)
     actual = resp.json()
 
     # Assert
@@ -64,12 +65,13 @@ def test_create_trip():
     # Clean up
     app.dependency_overrides = {}
 
+
 def test_get_trips():
     # Arrange
     app.dependency_overrides[TripRepository] = MockTripQueries
 
     # Act
-    resp1 = client.get('/trips')
+    resp1 = client.get("/trips")
     actual = resp1.json()
 
     # Assert

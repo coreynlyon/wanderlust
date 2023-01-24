@@ -1,5 +1,9 @@
 # Tracey's Journal
 
+### 1/23/23
+- Figuring out how to limit trip access to authorized viewers. Thinking about creating a viewers table to connect viewers to trips and then filtering in the front end
+- Wrote unit tests for create trip and get trip. Got tests to successfully pass. 
+
 ### 1/22/23
 - Added delete feature to trips
 
