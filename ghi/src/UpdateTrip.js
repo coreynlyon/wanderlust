@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Button }  from '@mantine/core';
-// import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { useParams } from 'react-router-dom';
@@ -14,6 +13,7 @@ function UpdateTrip() {
     const [attendees, setAttendees] = useState("");
     const [image_url, setImageUrl] = useState("");
     const [show, setShow] = useState(false);
+    const [setTrip] = useState("");
 
     useEffect(() => {
         const fetchTrips = async () => {
@@ -45,7 +45,7 @@ function UpdateTrip() {
           image_url
         };
 
-      const tripUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/trips/1`;
+      const tripUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/trips/${id}`;
       const fetchConfig = {
           method: "put",
           body: JSON.stringify(data),
@@ -57,6 +57,9 @@ function UpdateTrip() {
       const response = await fetch(tripUrl, fetchConfig);
       if (response.ok) {
             setShow(false);
+            const reloadResponse = await fetch(tripUrl);
+            const updatedTrip = await reloadResponse.json();
+            setTrip(updatedTrip);
             // event.target.reset();
             // setDestination("");
             // setStartDate("");

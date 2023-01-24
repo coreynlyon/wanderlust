@@ -75,6 +75,21 @@ export default function Itinerary() {
     fetchItinerary();
   }, [id]);
 
+  const deleteTrip = (id) => async () => {
+    if (window.confirm("Are you sure you want to delete this trip?")) {
+      try {
+        const url = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/trips/${id}/`;
+        const deleteResponse = await fetch(url, {
+          method: "delete",
+        });
+
+        if (deleteResponse.ok) {
+          window.location.href = "/trips";
+        }
+      } catch (err) {}
+    }
+  };
+
   return (
     <div>
       {itinerary ? (
@@ -102,7 +117,7 @@ export default function Itinerary() {
             <Container className="mb-3 mt-3" >
               <Flex justify="center" gap="sm" align="center" className={classes.controls}>
                 <div><UpdateTrip /></div>
-                <Button
+                <Button onClick={deleteTrip(id)}
                   variant="light"
                   size="md"
                   radius="sm"

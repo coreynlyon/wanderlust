@@ -10,6 +10,9 @@ import {
   ScrollArea,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { NavLink } from 'react-router-dom';
+
+
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -59,12 +62,8 @@ export default function Nav() {
           {/* <MantineLogo size={30} /> */}
 
           <Group sx={{ height: '100%' }} spacing={0} className={classes.hiddenMobile}>
-            <a href="/" className={classes.link}>
-              Home
-            </a>
-            <a href="/trips" className={classes.link}>
-              View Trips
-            </a>
+            <NavLink to="/" className={classes.link}> Home </NavLink>
+            <NavLink to="/trips" className={classes.link}> View Trips </NavLink>
           </Group>
 
           <Group className={classes.hiddenMobile}>
@@ -88,12 +87,8 @@ export default function Nav() {
         <ScrollArea sx={{ height: 'calc(100vh - 60px)' }} mx="-md">
           <Divider my="sm" color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'} />
 
-          <a href="/" className={classes.link}>
-            Home
-          </a>
-          <a href="/trips" className={classes.link}>
-            View Trips
-          </a>
+          <NavLink to="/" className={classes.link}> Home </NavLink>
+          <NavLink to="/trips" className={classes.link}> View Trips </NavLink>
 
           <Divider my="sm" color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'} />
 
