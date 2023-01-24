@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, Response
 from typing import Union, List, Optional
 from queries.trips import TripIn, TripRepository, TripOut, Error
 
+
 router = APIRouter()
 
 
@@ -11,6 +12,7 @@ def create_trip(
     repo: TripRepository = Depends(),
 ):
     return repo.create(trip)
+
 
 @router.get("/trips", response_model=Union[List[TripOut], Error])
 def get_all(
