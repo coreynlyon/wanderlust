@@ -32,7 +32,7 @@ function TripModal() {
           image_url,
         };
 
-      const tripUrl = `https://wanderlust-app.sept-pt-4.mod3projects.com/trips/`;
+      const tripUrl = `https://wanderlust-app.sept-pt-4.mod3projects.com/trips`;
       // const tripUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/trips/`;
       const fetchConfig = {
           method: "post",
