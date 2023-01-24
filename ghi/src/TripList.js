@@ -19,27 +19,7 @@ function TripList() {
     fetchTrips();
   }, []);
 
-  //   const deleteTrip = (id) => async () => {
-  //     try {
-  //       const url = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/trips/${id}/`;
-  //       const deleteResponse = await fetch(url,
-  //           {
-  //               method: "delete"
-  //           }
-  //       );
 
-  //       if (deleteResponse.ok) {
-  //         const reloadUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/trips/`;
-  //         const reloadResponse = await fetch(reloadUrl);
-  //         const newTrip = await reloadResponse.json();
-  //         setTrips(newTrip);
-  //       }
-
-  //     }
-  //     catch (err) {
-
-  //     }
-  //   };
 
   return (
     <div>
