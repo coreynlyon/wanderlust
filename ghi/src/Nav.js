@@ -13,6 +13,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { NavLink } from 'react-router-dom';
 
 
+
 const useStyles = createStyles((theme) => ({
   link: {
     display: 'flex',
@@ -100,4 +101,3 @@ export default function Nav() {
     </Box>
   );
 }
-
