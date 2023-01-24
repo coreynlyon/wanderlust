@@ -1,9 +1,7 @@
-from fastapi import Depends, FastAPI
+# from fastapi import Depends, FastAPI
 from fastapi.testclient import TestClient
 from datetime import date
-from routers.activities import (
-    ActivityIn, ActivityOut, ActivityRepository
-)
+from routers.activities import ActivityIn, ActivityOut, ActivityRepository
 
 from main import app
 
@@ -19,8 +17,8 @@ class FakeActivityRespository:
             place=activity.place,
             date=activity.date,
             notes=activity.notes,
-            trip_id=activity.trip_id
-            )
+            trip_id=activity.trip_id,
+        )
 
 
 def test_create_activity():
@@ -30,8 +28,8 @@ def test_create_activity():
         place="seattle",
         date=date(2022, 1, 1),
         notes="rainy",
-        trip_id=1
-        )
+        trip_id=1,
+    )
     activity_in.date = activity_in.date.isoformat()
 
     expected_activity = ActivityOut(
@@ -40,8 +38,8 @@ def test_create_activity():
         place="seattle",
         date=date(2022, 1, 1),
         notes="rainy",
-        trip_id=1
-        )
+        trip_id=1,
+    )
 
     expected_activity.date = expected_activity.date.isoformat()
 
