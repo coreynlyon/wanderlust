@@ -12,7 +12,7 @@ function TripDetails() {
 
   useEffect(() => {
     const fetchItinerary = async () => {
-      const url = `http://localhost:8100/itineraries/trip/${id}`;
+      const url = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/itineraries/trip/${id}`;
       const response = await fetch(url);
 
       if (response.ok) {

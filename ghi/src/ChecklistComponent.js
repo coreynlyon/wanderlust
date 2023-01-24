@@ -11,7 +11,7 @@ function Checklist() {
 
 	useEffect(() => {
 		const fetchChecklists = async () => {
-			const url = `http://localhost:8100/checklists/trip/${id}`;
+			const url = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/checklists/trip/${id}`;
 			const response = await fetch(url);
 
 			if (response.ok) {
@@ -29,7 +29,7 @@ function Checklist() {
             trip_id
          };
 
-        const checklistUrl = "http://localhost:8100/checklists/";
+        const checklistUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/checklists/`;
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(data),
@@ -42,7 +42,7 @@ function Checklist() {
         if (response.ok) {
             event.target.reset();
             setItemName("");
-            const reloadUrl = `http://localhost:8100/checklists/trip/${id}`;
+            const reloadUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/checklists/trip/${id}`;
             const reloadResponse = await fetch(reloadUrl);
             const newChecklist = await reloadResponse.json();
             setChecklists(newChecklist);
@@ -51,7 +51,7 @@ function Checklist() {
 
     const deleteChecklist = (id) => async () => {
     try {
-      const url = `http://localhost:8100/checklists/${id}/`;
+      const url = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/checklists/${id}/`;
       const deleteResponse = await fetch(url,
           {
               method: "delete"
@@ -59,7 +59,7 @@ function Checklist() {
       );
 
       if (deleteResponse.ok) {
-        const reloadUrl = `http://localhost:8100/checklists/trip/${id}`;
+        const reloadUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/checklists/trip/${id}`;
         const reloadResponse = await fetch(reloadUrl);
         const newChecklist = await reloadResponse.json();
         setChecklists(newChecklist);
