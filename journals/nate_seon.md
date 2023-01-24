@@ -27,3 +27,14 @@
 
 1/19:
 - worked on unit test
+
+1/20:
+- worked on unit teset
+- worked on table connections on backend
+
+1/23:
+- worked on unit test
+
+1/24:
+- unit test done
+
