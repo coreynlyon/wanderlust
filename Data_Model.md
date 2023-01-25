@@ -8,62 +8,63 @@
 
 | name             | type   | unique | optional |
 | ---------------- | ------ | ------ | -------- |
-| name             | string | yes    | no       |
-| product_type     | string | no     | no       |
-| product_category | string | no     | no       |
-| size             | string | no     | no       |
-| sku              | string | yes    | no       |
-| price            | int    | no     | no       |
-| scent1           | string | no     | no       |
-| scent2           | string | no     | no       |
-| quantity         | int    | no     | no       |
-| image            | string | no     | no       |
-| description      | string | no     | no       |
-
-The `product` entity contains the data about a specific product
-that a user can purchase.
-
-## Customer microservice
-
----
+| id               | int    | yes    | no       |
+| destination      | string | no     | no       |
+| start_date       | date   | no     | no       |
+| end_date         | date   | no     | no       |
+| attendees        | string | no     | no       |
+| image_url        | string | no     | no       |
 
 ### Itinerary
 
-| name    | type                        | unique | optional |
-| ------- | --------------------------- | ------ | -------- |
-| user    | reference to user entity    | true   | false    |
-| product | reference to product entity | true   | true     |
+| name                         | type   | unique | optional |
+| ---------------------------- | ------ | ------ | -------- |
+| id                           | int    | yes    | no       |
+| depart_flight_num            | string | no     | no       |
+| depart_flight_airline        | string | no     | no       |
+| depart_flight_date           | date   | no     | no       |
+| return_flight_num            | string | no     | no       |
+| return_flight_airline        | string | no     | no       |
+| return_flight_date           | date   | no     | no       |
+| trip_id                      | int    | yes    | no       |
 
 ### Activity
 
-| name        | type                        | unique | optional |
-| ----------- | --------------------------- | ------ | -------- |
-| import_href | reference to Product entity | yes    | no       |
-| name        | reference to Product entity | no     | no       |
-| sku         | reference to Product entity | yes    | no       |
-| price       | reference to Product entity | no     | no       |
-| image       | reference to Product entity | no     | no       |
+| name             | type   | unique | optional |
+| ---------------- | ------ | ------ | -------- |
+| id               | int    | yes    | no       |
+| activity_name    | string | no     | no       |
+| date             | date   | no     | no       |
+| place            | string | no     | no       |
+| notes            | string | no     | no       |
+| trip_id          | int    | yes    | no       |
 
 ### Checklist
 
-| name     | type                     | unique | optional |
-| -------- | ------------------------ | ------ | -------- |
-| answer_1 | string                   | no     | no       |
-| answer_2 | string                   | no     | no       |
-| answer_3 | string                   | no     | no       |
-| answer_4 | string                   | no     | no       |
-| answer_5 | string                   | no     | no       |
-| created  | datetime                 | no     | no       |
-| user     | reference to User entity | no     | no       |
+| name             | type   | unique | optional |
+| ---------------- | ------ | ------ | -------- |
+| id               | int    | yes    | no       |
+| item_name        | string | no     | no       |
+| trip_id          | int    | yes    | no       |
 
 ### Reservation
 
-| name     | type                     | unique | optional |
-| -------- | ------------------------ | ------ | -------- |
-| answer_1 | string                   | no     | no       |
-| answer_2 | string                   | no     | no       |
-| answer_3 | string                   | no     | no       |
-| answer_4 | string                   | no     | no       |
-| answer_5 | string                   | no     | no       |
-| created  | datetime                 | no     | no       |
-| user     | reference to User entity | no     | no       |
+| name                         | type   | unique | optional |
+| ---------------------------- | ------ | ------ | -------- |
+| id                           | int    | yes    | no       |
+| accommodation_name           | string | no     | no       |
+| address                      | string | no     | no       |
+| reservation_num              | string | no     | no       |
+| check_in                     | date   | no     | no       |
+| check_out                    | date   | no     | no       |
+| trip_id                      | int    | yes    | no       |
+
+### User
+
+| name                         | type   | unique | optional |
+| ---------------------------- | ------ | ------ | -------- |
+| id                           | int    | yes    | no       |
+| first_name                   | string | no     | no       |
+| last_name                    | string | no     | no       |
+| email                        | string | no     | no       |
+| hashed_password              | string | no     | no       |
