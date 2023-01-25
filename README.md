@@ -14,6 +14,7 @@ tasks for this week.
 
 ## Design
 [Link to API Design](API_Design.md)
+[Link to DATA Model](Data_Model.md)
 
 ## Deliverables
 
