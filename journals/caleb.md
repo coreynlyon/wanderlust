@@ -6,10 +6,8 @@ create router and query folder to hold functions and endpoints
 build endpoints for itineraries using fastapi
 test using fastapi docs
 
-accomplished:
-
-
 1/10
+started writing 
 
 
 1/11
