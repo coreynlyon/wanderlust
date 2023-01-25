@@ -14,7 +14,7 @@ function ItineraryForm() {
 
     useEffect(() => {
         if (submitted) {
-            window.location.replace(`/trip/${id}`)
+            window.location.replace(`/wanderlust/trip/${id}`)
         }
     })
 
