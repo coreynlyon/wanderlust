@@ -78,7 +78,7 @@ export default function Itinerary() {
   const deleteTrip = (id) => async () => {
     if (window.confirm("Are you sure you want to delete this trip?")) {
       try {
-        const url = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/trips/${id}/`;
+        const url = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/trips/${id}`;
         const deleteResponse = await fetch(url, {
           method: "delete",
         });

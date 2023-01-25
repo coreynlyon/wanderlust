@@ -5,7 +5,7 @@ from queries.trips import TripIn, TripRepository, TripOut, Error
 router = APIRouter()
 
 
-@router.post("/wanderlust/trips", response_model=Union[TripOut, Error])
+@router.post("/trips", response_model=Union[TripOut, Error])
 def create_trip(
     trip: TripIn,
     repo: TripRepository = Depends(),

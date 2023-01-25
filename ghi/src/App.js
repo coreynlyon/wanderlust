@@ -22,8 +22,8 @@ function App() {
             <Route path="/trips" element={<TripList />} />
             <Route path="/itinerary" element={<ItineraryForm />} />
             <Route path="/trip/:id" element={<TripDetails />} />
-            <Route path="/activities/" element={<ActivityList />} />
-            <Route path="/activities/new/" element={<ActivityForm />} />
+            <Route path="/activities" element={<ActivityList />} />
+            <Route path="/activities/new" element={<ActivityForm />} />
           </Routes>
         </div>
       </BrowserRouter>
