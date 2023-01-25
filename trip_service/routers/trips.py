@@ -31,7 +31,7 @@ def update_trip(
     return repo.update(trip_id, trip)
 
 
-@router.delete("/wanderlust/trips/{trip_id}", response_model=bool)
+@router.delete("/trips/{trip_id}", response_model=bool)
 def delete_trip(
     trip_id: int,
     repo: TripRepository = Depends(),
