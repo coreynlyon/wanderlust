@@ -21,7 +21,7 @@ def get_all(
 
 
 @router.put(
-    "/wanderlust/trips/{trip_id}", response_model=Union[TripOut, Error]
+    "/trips/{trip_id}", response_model=Union[TripOut, Error]
     )
 def update_trip(
     trip_id: int,
