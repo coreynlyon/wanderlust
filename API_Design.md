@@ -167,3 +167,66 @@ Output:
 
 Creating a new checklist saves the id, item_name, trip_id. 
 This adds a new checklist to related activity to the database which can be added or editied by a user.
+
+
+## Token
+
+- Method: `GET`, `POST`, `DELETE`
+- Path: `/token`
+
+Input:
+
+```
+grant_type: "string"
+pattern: password
+username: "string"
+password: "string"
+scope: "string"
+client_id: "string"
+client_secret: "string"
+```
+
+Output:
+
+```json
+{
+  "access_token": "string",
+  "token_type": "Bearer"
+}
+```
+
+Creating a new token for the authorization.
+
+
+## Users
+
+- Method: `GET`, `POST`, `PUT`, `DELETE`
+- Path: `/users`, `/users/{user_id}`
+
+Input:
+
+```json
+{
+  "first_name": "string",
+  "last_name": "string",
+  "email": "string",
+  "password": "string"
+}
+```
+
+Output:
+
+```json
+{
+  "access_token": "string",
+  "token_type": "Bearer",
+  "user": {
+    "id": "int",
+    "first_name": "string",
+    "last_name": "string",
+    "email": "string"
+  }
+}
+```
+
+Creating a new user saves access_token, user(id, first_name, last_name, and email) and it will give users authorization for restriced behaviors on our application
