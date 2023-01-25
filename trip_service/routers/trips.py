@@ -6,7 +6,7 @@ from queries.trips import TripIn, TripRepository, TripOut, Error
 router = APIRouter()
 
 
-@router.post("/wanderlust/trips", response_model=Union[TripOut, Error])
+@router.post("/trips", response_model=Union[TripOut, Error])
 def create_trip(
     trip: TripIn,
     repo: TripRepository = Depends(),
@@ -21,7 +21,9 @@ def get_all(
     return repo.get_all()
 
 
-@router.put("/trips/{trip_id}", response_model=Union[TripOut, Error])
+@router.put(
+    "/trips/{trip_id}", response_model=Union[TripOut, Error]
+    )
 def update_trip(
     trip_id: int,
     trip: TripIn,

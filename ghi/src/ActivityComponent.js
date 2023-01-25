@@ -42,7 +42,7 @@ function Activities() {
           trip_id
         };
 
-      const activityUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/activities/`;
+      const activityUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/activities`;
       const fetchConfig = {
           method: "post",
           body: JSON.stringify(data),

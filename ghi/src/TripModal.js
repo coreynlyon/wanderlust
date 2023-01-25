@@ -18,7 +18,7 @@ function TripModal() {
 
   useEffect(() => {
         if (submitted) {
-            window.location.replace("/trips");
+            window.location.replace("/wanderlust/trips");
         }
     }, [submitted]);
 
@@ -32,8 +32,8 @@ function TripModal() {
           image_url,
         };
 
-      const tripUrl = `https://wanderlust-app.sept-pt-4.mod3projects.com/trips`;
-      // const tripUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/trips/`;
+      // const tripUrl = `https://wanderlust-app.sept-pt-4.mod3projects.com/trips`;
+      const tripUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/trips`;
       const fetchConfig = {
           method: "post",
           body: JSON.stringify(data),
