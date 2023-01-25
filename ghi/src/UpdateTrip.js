@@ -45,7 +45,7 @@ function UpdateTrip() {
           image_url
         };
 
-      const tripUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/trips/${id}`;
+      const tripUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/wanderlust/trips/${id}`;
       const fetchConfig = {
           method: "put",
           body: JSON.stringify(data),

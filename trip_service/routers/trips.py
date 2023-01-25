@@ -20,7 +20,9 @@ def get_all(
     return repo.get_all()
 
 
-@router.put("/trips/{trip_id}", response_model=Union[TripOut, Error])
+@router.put(
+    "/wanderlust/trips/{trip_id}", response_model=Union[TripOut, Error]
+    )
 def update_trip(
     trip_id: int,
     trip: TripIn,
@@ -29,7 +31,7 @@ def update_trip(
     return repo.update(trip_id, trip)
 
 
-@router.delete("/trips/{trip_id}", response_model=bool)
+@router.delete("/wanderlust/trips/{trip_id}", response_model=bool)
 def delete_trip(
     trip_id: int,
     repo: TripRepository = Depends(),
