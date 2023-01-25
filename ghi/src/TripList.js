@@ -8,8 +8,8 @@ function TripList() {
 
   useEffect(() => {
     const fetchTrips = async () => {
-      const url = `https://wanderlust-app.sept-pt-4.mod3projects.com/wanderlust/trips`;
-      // const url = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/trips`;
+      // const url = `https://wanderlust-app.sept-pt-4.mod3projects.com/wanderlust/trips`;
+      const url = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/trips`;
       const response = await fetch(url);
 
       if (response.ok) {
