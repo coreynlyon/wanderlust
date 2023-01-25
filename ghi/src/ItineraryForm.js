@@ -14,7 +14,7 @@ function ItineraryForm() {
 
     useEffect(() => {
         if (submitted) {
-            window.location.replace(`/trip/${id}`)
+            window.location.replace(`/wanderlust/trip/${id}`)
         }
     })
 
@@ -31,7 +31,7 @@ function ItineraryForm() {
             trip_id,
          };
 
-        const itineraryUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/itineraries/`;
+        const itineraryUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/itineraries`;
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(data),

@@ -29,7 +29,7 @@ function Checklist() {
             trip_id
          };
 
-        const checklistUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/checklists/`;
+        const checklistUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/checklists`;
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(data),
@@ -51,7 +51,7 @@ function Checklist() {
 
     const deleteChecklist = (id) => async () => {
     try {
-      const url = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/checklists/${id}/`;
+      const url = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/checklists/${id}`;
       const deleteResponse = await fetch(url,
           {
               method: "delete"

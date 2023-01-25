@@ -43,7 +43,7 @@ export default function Reservation() {
           trip_id,
         };
 
-      const reservationUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/reservations/`;
+      const reservationUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/reservations`;
       const fetchConfig = {
           method: "post",
           body: JSON.stringify(data),
