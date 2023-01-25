@@ -84,7 +84,7 @@ export default function Itinerary() {
         });
 
         if (deleteResponse.ok) {
-          window.location.href = "/trips";
+          window.location.href = "/wanderlust/trips";
         }
       } catch (err) {}
     }
