@@ -18,7 +18,7 @@ function TripModal() {
 
   useEffect(() => {
         if (submitted) {
-            window.location.replace("/trips");
+            window.location.replace("/wanderlust/trips");
         }
     }, [submitted]);
 
