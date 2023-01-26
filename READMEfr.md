@@ -1,12 +1,12 @@
-Wanderlust
+#Wanderlust
 
-Nate Seon
-Tracey Chung
-Corey Lyon
-Caleb Lee
-Bette La
+##Nate Seon
+##Tracey Chung
+##Corey Lyon
+##Caleb Lee
+##Bette La
 
-Wanderlust
+#Wanderlust
 "Say goodbye to the stress of planning your next adventure and hello to Wanderlust, the ultimate travel companion that takes care of all your itinerary needs!"
 
 Design
@@ -14,7 +14,6 @@ Design
 API design
 Data model
 GHI
-Integrations
 
 
 Intended market
