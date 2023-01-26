@@ -12,6 +12,10 @@ tasks for this week.
 * Prettier: <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>
 * Black Formatter: <https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter>
 
+## Design
+[Link to API Design](API_Design.md)
+[Link to Data Model](Data_Model.md)
+
 ## Deliverables
 
 * [ ] Wire-frame diagrams
@@ -64,6 +68,8 @@ look like.
 
 The sample Dockerfile and Dockerfile.dev run your migrations
 for you automatically.
+
+
 
 ### Other files
 
