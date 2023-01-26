@@ -30,11 +30,8 @@ class ReservationOut(BaseModel):
 class ReservationRepository:
     def get_one(self, reservation_id: int) -> Optional[ReservationOut]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our SELECT statement
                     result = db.execute(
                         """
                         SELECT id
@@ -53,15 +50,12 @@ class ReservationRepository:
                     if record is None:
                         return None
                     return self.record_to_reservation_out(record)
-        except Exception as e:
-            print(e)
+        except Exception:
             return {"message": "Could not get that reservation"}
 
     def delete(self, reservation_id: int) -> bool:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     db.execute(
                         """
@@ -71,17 +65,14 @@ class ReservationRepository:
                         [reservation_id],
                     )
                     return True
-        except Exception as e:
-            print(e)
+        except Exception:
             return False
 
     def update(
         self, reservation_id: int, reservation: ReservationIn
     ) -> Union[ReservationOut, Error]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     db.execute(
                         """
@@ -107,19 +98,15 @@ class ReservationRepository:
                     return self.reservation_in_to_out(
                         reservation_id, reservation
                     )
-        except Exception as e:
-            print(e)
+        except Exception:
             return {"message": "Could not update that reservation"}
 
     def get_res_by_trip_id(
         self, trip_id: int
     ) -> Union[List[ReservationOut], Error]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our SELECT statement
                     result = db.execute(
                         """
                             SELECT id
@@ -138,17 +125,13 @@ class ReservationRepository:
                         self.record_to_reservation_out(record)
                         for record in result
                     ]
-        except Exception as e:
-            print(e)
+        except Exception:
             return {"message": "Could not get reservation with that trip id"}
 
     def get_all(self) -> Union[List[ReservationOut], Error]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our SELECT statement
                     result = db.execute(
                         """
                         SELECT id
@@ -166,19 +149,15 @@ class ReservationRepository:
                         self.record_to_reservation_out(record)
                         for record in result
                     ]
-        except Exception as e:
-            print(e)
+        except Exception:
             return {"message": "Could not get all reservations"}
 
     def create(
         self, reservation: ReservationIn
     ) -> Union[ReservationOut, Error]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our INSERT statement
                     result = db.execute(
                         """
                         INSERT INTO reservations
@@ -211,7 +190,6 @@ class ReservationRepository:
         return ReservationOut(id=id, **old_data)
 
     def record_to_reservation_out(self, record):
-        print(record)
         return ReservationOut(
             id=record[0],
             accommodation_name=record[1],

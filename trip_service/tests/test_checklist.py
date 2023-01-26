@@ -12,11 +12,7 @@ class TestChecklistRepository:
         return [checklist]
 
 
-checklist = {
-  "id": 2,
-  "item_name": "string",
-  "trip_id": 1
-}
+checklist = {"id": 2, "item_name": "string", "trip_id": 1}
 
 
 def test_get_all():

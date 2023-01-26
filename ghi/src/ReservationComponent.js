@@ -81,7 +81,7 @@ export default function Reservation() {
             ) : (
             <Text>
             <br />
-            You haven't added any accommodations to your trip!
+            You haven't added any accommodations to your trip
             <br />
             <br />
                 <>
