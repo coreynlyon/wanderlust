@@ -139,7 +139,7 @@ export default function Itinerary() {
         });
 
         if (deleteResponse.ok) {
-          navigate("/trips");
+          navigate("/wanderlust/trips");
         }
         else {
           return (

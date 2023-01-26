@@ -124,7 +124,6 @@ function TripList() {
         </div>
       </div>
       <div className="d-grid gap-2 d-sm-flex justify-content-sm-center mt-3 mb-3">
-        {/* <TripModal /> */}
           <Button
             variant="primary"
             radius="xl"

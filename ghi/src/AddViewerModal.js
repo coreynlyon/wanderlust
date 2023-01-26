@@ -35,7 +35,7 @@ function ViewerModal({id}) {
       const response = await fetch(viewerUrl, fetchConfig);
       if (response.ok) {
           setShow(false);
-          return redirect("/trips");
+          return redirect("/wanderlust/trips");
       }
       else {
         return(

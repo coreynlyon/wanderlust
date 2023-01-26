@@ -23,8 +23,6 @@ We are primarily focused on catering towards consumers who are finding ways to o
 
 ## Functionality
 
-Visitors to the site are able to create a user and create an itinerary for any given trip that can be subsequently shared via email to individuals partaking in the trip.
-
 1. As a user, I can login/sign up so I can access the app.
 2. As a user, I am able to create/edit itinerary form for trip and share with other users to view so that a group can plan the trip.
 3. As a user, I can be invited to view a trip made by a different user.

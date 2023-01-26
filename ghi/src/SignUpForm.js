@@ -27,7 +27,7 @@ function SignupForm() {
       alert("Could not sign up. Try again");
     } else {
       clearState();
-      navigate("/");
+      navigate("/wanderlust");
     }
   }
 

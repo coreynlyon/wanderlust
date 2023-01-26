@@ -12,7 +12,6 @@ Input:
   "destination": "string",
   "start_date": "date",
   "end_date": "date",
-  "attendees": "string",
   "image_url": "string",
 }
 ```
@@ -25,12 +24,11 @@ Output:
   "destination": "string",
   "start_date": "date",
   "end_date": "date",
-  "attendees": "string",
   "image_url": "string"
 }
 ```
 
-Creating a new trip saves the id, destination, start_date, end_date, attendees, and image.
+Creating a new trip saves the id, destination, start_date, end_date, and image.
 
 
 ## Itineraries
@@ -67,12 +65,11 @@ Output:
   "destination": "string",
   "start_date": "date",
   "end_date": "date",
-  "attendees": "string",
   "image_url": "string"
 }
 ```
 
-Creating a new itinerary saves the id, depart_flight_num, depart_flight_airline, depart_flight_date, return_flight_num, return_flight_airline, return_flight_date, trip_id, destination, start_date, end_date, attendees, image. This adds a new existing itineraries to the database which can be added or editied by a user.
+Creating a new itinerary saves the id, depart_flight_num, depart_flight_airline, depart_flight_date, return_flight_num, return_flight_airline, return_flight_date, trip_id, destination, start_date, end_date, image. This adds a new existing itineraries to the database which can be added or editied by a user.
 
 ## Reservations
 
@@ -138,7 +135,7 @@ Output:
 }
 ```
 
-Creating a new activity saves the id, activity_name, place, notes, date, trip_id. 
+Creating a new activity saves the id, activity_name, place, notes, date, trip_id.
 This adds a new activity to related trip to the database which can be added or editied by a user.
 
 ## Checklists
@@ -165,7 +162,7 @@ Output:
 }
 ```
 
-Creating a new checklist saves the id, item_name, trip_id. 
+Creating a new checklist saves the id, item_name, trip_id.
 This adds a new checklist to related activity to the database which can be added or editied by a user.
 
 

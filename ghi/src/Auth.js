@@ -55,8 +55,8 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
 
   return (
-    <AuthContext.Provider 
-    value={{ 
+    <AuthContext.Provider
+    value={{
       token,
       setToken,
       isLoggedIn,
@@ -90,7 +90,7 @@ export function useToken() {
       await fetch(url, { method: "delete", credentials: "include" });
       internalToken = null;
       setToken(null);
-      navigate("/");
+      navigate("/wanderlust");
     }
   }
 
@@ -108,13 +108,13 @@ export function useToken() {
       const token = await getTokenInternal();
       setToken(token);
       setIsLoggedIn(true);
-      navigate("/");
+      navigate("/wanderlust");
       return;
     }
     let error = await response.json();
     setIsLoggedIn(false);
     return handleErrorMessage(error);
-    
+
   }
 
   async function signup(email, firstName, lastName, password) {
@@ -160,5 +160,5 @@ export function useToken() {
   return [token, login, logout, signup, update];
 
 
-  
+
   }
