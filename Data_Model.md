@@ -12,7 +12,6 @@
 | destination      | string | no     | no       |
 | start_date       | date   | no     | no       |
 | end_date         | date   | no     | no       |
-| attendees        | string | no     | no       |
 | image_url        | string | no     | no       |
 
 ### Itinerary

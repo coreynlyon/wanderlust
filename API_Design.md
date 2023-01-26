@@ -12,7 +12,6 @@ Input:
   "destination": "string",
   "start_date": "date",
   "end_date": "date",
-  "attendees": "string",
   "image_url": "string",
 }
 ```
@@ -25,7 +24,6 @@ Output:
   "destination": "string",
   "start_date": "date",
   "end_date": "date",
-  "attendees": "string",
   "image_url": "string"
 }
 ```
@@ -67,7 +65,6 @@ Output:
   "destination": "string",
   "start_date": "date",
   "end_date": "date",
-  "attendees": "string",
   "image_url": "string"
 }
 ```
