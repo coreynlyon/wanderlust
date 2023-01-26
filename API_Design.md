@@ -13,7 +13,7 @@ Input:
   "start_date": "date",
   "end_date": "date",
   "attendees": "string",
-  "image_url": "string"
+  "image_url": "string",
 }
 ```
 
