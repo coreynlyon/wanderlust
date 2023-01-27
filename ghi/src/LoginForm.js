@@ -23,7 +23,7 @@ const LoginForm = () => {
             );
 
         } else {
-        return redirect("wanderlust/trips");
+        return redirect("/trips");
         }
     };
 

@@ -19,7 +19,7 @@ function TripModal() {
 
   useEffect(() => {
         if (submitted) {
-            navigate("/wanderlust/trips");
+            navigate("/trips");
         }
     }, [submitted, navigate]);
 

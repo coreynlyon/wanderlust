@@ -90,7 +90,7 @@ export function useToken() {
       await fetch(url, { method: "delete", credentials: "include" });
       internalToken = null;
       setToken(null);
-      navigate("/wanderlust");
+      navigate("/");
     }
   }
 
@@ -108,7 +108,7 @@ export function useToken() {
       const token = await getTokenInternal();
       setToken(token);
       setIsLoggedIn(true);
-      navigate("/wanderlust");
+      navigate("/");
       return;
     }
     let error = await response.json();
