@@ -1,52 +1,52 @@
-import React, { useState, useEffect } from 'react';
-import { Button } from '@mantine/core';
-import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
+import React, { useState, useEffect } from "react";
+import { Button } from "@mantine/core";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
+import { useAuthContext } from "./Auth";
+import { useNavigate } from "react-router-dom";
 
 function TripModal() {
   const [destination, setDestination] = useState("");
   const [start_date, setStartDate] = useState("");
   const [end_date, setEndDate] = useState("");
-  const [attendees, setAttendees] = useState("");
   const [image_url, setImageUrl] = useState("");
   const [submitted, setSubmitted] = useState(false);
-
   const [show, setShow] = useState(false);
-
+  const { token } = useAuthContext();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  let navigate = useNavigate();
 
   useEffect(() => {
         if (submitted) {
-            window.location.replace("/wanderlust/trips");
+            navigate("/trips");
         }
-    }, [submitted]);
+    }, [submitted, navigate]);
 
   const handleSubmit = async (event) => {
-      event.preventDefault();
-      const data = {
-          destination,
-          start_date,
-          end_date,
-          attendees,
-          image_url,
-        };
+    event.preventDefault();
+    const data = {
+      destination,
+      start_date,
+      end_date,
+      image_url,
+    };
 
-      // const tripUrl = `https://wanderlust-app.sept-pt-4.mod3projects.com/trips`;
-      const tripUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/trips`;
-      const fetchConfig = {
-          method: "post",
-          body: JSON.stringify(data),
-          headers: {
-              "Content-Type": "application/json",
-          },
-      };
+    const tripUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/trips`;
+    const fetchConfig = {
+      method: "post",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
-      const response = await fetch(tripUrl, fetchConfig);
-      if (response.ok) {
-          setShow(false);
-          setSubmitted(true);
-      }
+    const response = await fetch(tripUrl, fetchConfig);
+    if (response.ok) {
+      setShow(false);
+      setSubmitted(true);
+    }
   };
 
   return (
@@ -56,8 +56,7 @@ function TripModal() {
         radius="xl"
         size="md"
         color="indigo"
-        onClick={handleShow}
-      >
+        onClick={handleShow}>
         Add a trip
       </Button>
 
@@ -79,9 +78,7 @@ function TripModal() {
                 autoFocus
               />
             </Form.Group>
-            <Form.Group
-              className="mb-3"
-            >
+            <Form.Group className="mb-3">
               <Form.Label>Start Date</Form.Label>
               <Form.Control
                 onChange={(e) => setStartDate(e.target.value)}
@@ -92,9 +89,7 @@ function TripModal() {
                 autoFocus
               />
             </Form.Group>
-           <Form.Group
-              className="mb-3"
-            >
+            <Form.Group className="mb-3">
               <Form.Label>End Date</Form.Label>
               <Form.Control
                 onChange={(e) => setEndDate(e.target.value)}
@@ -105,23 +100,7 @@ function TripModal() {
                 autoFocus
               />
             </Form.Group>
-           <Form.Group
-              className="mb-3"
-            >
-              <Form.Label>Attendees</Form.Label>
-              <Form.Control
-                onChange={(e) => setAttendees(e.target.value)}
-                placeholder="Enter attendees"
-                required
-                type="text"
-                name="attendees"
-                id="attendees"
-                autoFocus
-              />
-            </Form.Group>
-           <Form.Group
-              className="mb-3"
-            >
+            <Form.Group className="mb-3">
               <Form.Label>Image URL</Form.Label>
               <Form.Control
                 onChange={(e) => setImageUrl(e.target.value)}

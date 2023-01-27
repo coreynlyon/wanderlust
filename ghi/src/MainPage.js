@@ -6,8 +6,7 @@ function MainPage() {
       <section>
         <HeroBullets />
       </section>
-  </div>
-
+    </div>
   );
 }
 

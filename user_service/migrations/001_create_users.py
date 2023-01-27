@@ -17,4 +17,3 @@ steps = [
         """,
     ]
 ]
-print(__name__)

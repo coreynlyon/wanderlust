@@ -13,20 +13,29 @@ lint-test-job:
     - flake8 user_service
 
 # Run the unit tests
-# api-unit-test-job:
-#   image: python:3-bullseye
-#   stage: test
-#   needs:
-#     - lint-test-job
-#   script:
-#     - cd sample_service
-#     - pip install -r requirements.txt
-#     - python -m pytest
+user_service-unit-test-job:
+  image: python:3-bullseye
+  stage: test
+  needs:
+    - lint-test-job
+  script:
+    - cd user_service
+    - pip install -r requirements.txt
+    - export DATABASE_URL="postgresql://user_service:password@postgres/user_service"
+    - export SIGNING_KEY="Q64VLr6v3bDEylasF84us43SqKMz72AN"
+    - python -m pytest
+
+trip_service-unit-test-job:
+  image: python:3-bullseye
+  stage: test
+  script:
+    - cd trip_service
+    - pip install -r requirements.txt
+    - export DATABASE_URL="postgresql://trip_service:password@postgres/trip_service"
+    - export SIGNING_KEY="Q64VLr6v3bDEylasF84us43SqKMz72AN"
+    - python -m pytest
 
 # Build the React/JavaScript front-end
-
-
-
 build-front-end-job:
   stage: build
   image: node:lts-bullseye
@@ -39,6 +48,8 @@ build-front-end-job:
     # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
     PUBLIC_URL: https://group-04-trip-tech.gitlab.io/wanderlust/
     REACT_APP_TRIP_SERVICE_API_HOST: https://wanderlust-app.sept-pt-4.mod3projects.com
+    REACT_APP_USER_SERVICE_API_HOST: https://user-service-app.sept-pt-4.mod3projects.com
+
   script:
     - cd ghi
     - npm install

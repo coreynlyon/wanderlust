@@ -12,6 +12,8 @@ import {
 import { IconCheck } from '@tabler/icons';
 import TripModal from './TripModal';
 import { Link } from 'react-router-dom';
+import { useAuthContext } from "./Auth";
+
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -67,6 +69,8 @@ const useStyles = createStyles((theme) => ({
 
 export function HeroBullets() {
   const { classes } = useStyles();
+  const { token } = useAuthContext();
+
   return (
     <div>
       <Container>
@@ -100,6 +104,7 @@ export function HeroBullets() {
               </List.Item>
             </List>
 
+            { token ?
             <Group mt={30}>
                 <div radius="xl" size="md" className={classes.control} >
                     <TripModal />
@@ -109,8 +114,8 @@ export function HeroBullets() {
                     View Trips
                 </Button>
               </Link>
+            </Group> : null }
 
-            </Group>
           </div>
           <Image src="https://img.freepik.com/free-vector/online-app-tourism-traveler-with-mobile-phone-passport-booking-buying-plane-ticket_74855-10966.jpg?w=2000" alt="travel_pic"/>
         </div>
