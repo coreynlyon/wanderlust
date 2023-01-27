@@ -141,15 +141,6 @@ export default function Itinerary() {
         if (deleteResponse.ok) {
           navigate("/trips");
         }
-        else {
-          return (
-            <div
-              className="alert text-center alert-success mb-0 p-4 mt-4"
-              id="danger-message">
-              You are not authorized to add a viewer to this trip
-            </div>
-          );
-        }
       } catch (err) {}
     }
   };
