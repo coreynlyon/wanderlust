@@ -1,5 +1,10 @@
 # Tracey's Journal
 
+### 1/26/23
+- Worked on deployment
+- Updated gitlab yml
+- Fixed re-routes on app
+
 ### 1/25/23
 - Updated nav to show login/logout depending on user status
 - Users can now see trips they've been invited to and trips they created on front end
@@ -25,7 +30,7 @@
 
 ### 1/18/23
 - Fixed merge errors from yday (docker compose file + package.json file) and debugged
-- Added checklist component to FE and BE
+- Added checklist component to FE and BE with Corey
 - Working on how to link data from one another
 
 ### 1/17/23
