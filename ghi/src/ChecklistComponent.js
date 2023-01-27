@@ -59,10 +59,10 @@ function Checklist() {
       );
 
       if (deleteResponse.ok) {
-        const reloadUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/checklists/trip/${id}`;
-        const reloadResponse = await fetch(reloadUrl);
-        const newChecklist = await reloadResponse.json();
-        setChecklists(newChecklist);
+          const updatedChecklists = checklists.filter(
+            (checklist) => checklist.id !== id
+          );
+          setChecklists(updatedChecklists);
       }
 
     }
@@ -106,10 +106,7 @@ function Checklist() {
                                     <input className="form-check-input me-2" type="checkbox" value={checklist.item_name} aria-label="..." />
                                     {checklist.item_name}
                                     </div>
-                                    {/* <Button  data-mdb-toggle="tooltip" title="Remove item"> */}
-                                        {/* <img onClick={deleteChecklist(checklist.id)} width="20" height="20" src="https://cdn-icons-png.flaticon.com/512/6065/6065488.png" alt="edit"/> */}
                                         <img onClick={deleteChecklist(checklist.id)} width="10" height="10" src="https://cdn-icons-png.flaticon.com/512/109/109602.png" alt="x-mark" />
-                                    {/* </Button> */}
                                 </li>
                             )
                         })}

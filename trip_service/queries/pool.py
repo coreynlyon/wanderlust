@@ -1,6 +1,4 @@
-import os  # lets us use an environment variable
+import os
 from psycopg_pool import ConnectionPool
 
-pool = ConnectionPool(
-    conninfo=os.environ["DATABASE_URL"]
-)  # provides connection info for our pool which allows us to connect to the DB
+pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])

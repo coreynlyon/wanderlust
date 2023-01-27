@@ -16,7 +16,6 @@ expected_post_resp = {
     "destination": "Japan",
     "start_date": "2023-01-21",
     "end_date": "2023-01-24",
-    "attendees": "Frank",
     "image_url": "https://www.state.gov/Japan-2107x1406.jpg",
 }
 
@@ -34,7 +33,6 @@ itineraries = [
         "destination": "string",
         "start_date": "2023-01-24",
         "end_date": "2023-01-24",
-        "attendees": "string",
         "image_url": "string",
     },
 ]
@@ -62,29 +60,22 @@ def test_create_itinerary():
     }
     app.dependency_overrides[ItineraryRepository] = MockItineraryQueries
 
-    # Act
     resp = client.post("/itineraries", json=req_body)
     actual = resp.json()
 
-    # Assert
     assert resp.status_code == 200
     assert actual == expected_post_resp
 
-    # Clean up
     app.dependency_overrides = {}
 
 
 def test_get_itineraries():
-    # Arrange
     app.dependency_overrides[ItineraryRepository] = MockItineraryQueries
 
-    # Act
     resp1 = client.get("/itineraries")
     actual = resp1.json()
 
-    # Assert
     assert resp1.status_code == 200
     assert actual == itineraries
 
-    # Clean up
     app.dependency_overrides = {}

@@ -125,7 +125,6 @@
     {
         "destination": string,
         "description": string,
-        "attendees": string,
         "notes": string,
         "activity": string
     }
@@ -156,7 +155,6 @@
                 "itinerary_id": number,
                 "destination": string,
                 "description": string,
-                "attendees": string,
                 "notes": string,
                 "activity": string
             }
@@ -176,7 +174,6 @@
     {
         "destination": string,
         "description": string,
-        "attendees": string,
         "notes": string,
         "activity": string
     }
@@ -189,7 +186,6 @@
         "itinerary_id": number,
         "destination": string,
         "description": string,
-        "attendees": string,
         "notes": string,
         "activity": string
     }

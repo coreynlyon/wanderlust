@@ -28,11 +28,8 @@ class ActivityOut(BaseModel):
 class ActivityRepository:
     def get_one(self, activity_id: int) -> Optional[ActivityOut]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our SELECT statement
                     result = db.execute(
                         """
                         SELECT id
@@ -50,15 +47,12 @@ class ActivityRepository:
                     if record is None:
                         return None
                     return self.record_to_activity_out(record)
-        except Exception as e:
-            print(e)
+        except Exception:
             return {"message": "Could not get that activity"}
 
     def delete(self, activity_id: int) -> bool:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     db.execute(
                         """
@@ -68,17 +62,14 @@ class ActivityRepository:
                         [activity_id],
                     )
                     return True
-        except Exception as e:
-            print(e)
+        except Exception:
             return False
 
     def update(
         self, activity_id: int, activity: ActivityIn
     ) -> Union[ActivityOut, Error]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     db.execute(
                         """
@@ -100,19 +91,15 @@ class ActivityRepository:
                         ],
                     )
                     return self.activity_in_to_out(activity_id, activity)
-        except Exception as e:
-            print(e)
+        except Exception:
             return {"message": "Could not update that activity"}
 
     def get_act_by_trip_id(
         self, trip_id: int
     ) -> Union[List[ActivityOut], Error]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our SELECT statement
                     result = db.execute(
                         """
                         SELECT id
@@ -131,17 +118,13 @@ class ActivityRepository:
                         self.record_to_activity_out(record)
                         for record in result
                     ]
-        except Exception as e:
-            print(e)
+        except Exception:
             return {"message": "Could not get activities with that trip id"}
 
     def get_all(self) -> Union[List[ActivityOut], Error]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our SELECT statement
                     result = db.execute(
                         """
                         SELECT id
@@ -158,17 +141,13 @@ class ActivityRepository:
                         self.record_to_activity_out(record)
                         for record in result
                     ]
-        except Exception as e:
-            print(e)
+        except Exception:
             return {"message": "Could not get all activities"}
 
     def create(self, activity: ActivityIn) -> Union[ActivityOut, Error]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our INSERT statement
                     result = db.execute(
                         """
                         INSERT INTO activities
@@ -195,7 +174,6 @@ class ActivityRepository:
         return ActivityOut(id=id, **old_data)
 
     def record_to_activity_out(self, record):
-        print(record)
         return ActivityOut(
             id=record[0],
             activity_name=record[1],

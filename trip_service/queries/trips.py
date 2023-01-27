@@ -12,7 +12,6 @@ class TripIn(BaseModel):
     destination: str
     start_date: date
     end_date: date
-    attendees: str
     image_url: Optional[str]
 
 
@@ -21,26 +20,23 @@ class TripOut(BaseModel):
     destination: str
     start_date: date
     end_date: date
-    attendees: str
     image_url: Optional[str]
+    creator: int
 
 
 class TripRepository:
     def get_one(self, trip_id: int) -> Optional[TripOut]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our SELECT statement
                     result = db.execute(
                         """
                         SELECT id
                              , destination
                              , start_date
                              , end_date
-                             , attendees
                              , image_url
+                             , creator
                         FROM trips
                         WHERE id = %s
                         """,
@@ -55,9 +51,7 @@ class TripRepository:
 
     def delete(self, trip_id: int) -> bool:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     db.execute(
                         """
@@ -70,11 +64,11 @@ class TripRepository:
         except Exception:
             return False
 
-    def update(self, trip_id: int, trip: TripIn) -> Union[TripOut, Error]:
+    def update(
+        self, trip_id: int, trip: TripIn, user_id: int
+    ) -> Union[TripOut, Error]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     db.execute(
                         """
@@ -82,7 +76,6 @@ class TripRepository:
                         SET destination = %s
                           , start_date = %s
                           , end_date = %s
-                          , attendees = %s
                           , image_url = %s
                         WHERE id = %s
                         """,
@@ -90,30 +83,26 @@ class TripRepository:
                             trip.destination,
                             trip.start_date,
                             trip.end_date,
-                            trip.attendees,
                             trip.image_url,
                             trip_id,
                         ],
                     )
-                    return self.trip_in_to_out(trip_id, trip)
+                    return self.trip_in_to_out(trip_id, user_id, trip)
         except Exception:
             return {"message": "Could not update that trip"}
 
     def get_all(self) -> Union[List[TripOut], Error]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our SELECT statement
                     result = db.execute(
                         """
                         SELECT id
                              , destination
                              , start_date
                              , end_date
-                             , attendees
                              , image_url
+                             , creator
                         FROM trips
                         ORDER BY start_date;
                         """
@@ -121,25 +110,21 @@ class TripRepository:
                     return [
                         self.record_to_trip_out(record) for record in result
                     ]
-        except Exception as e:
-            print(e)
+        except Exception:
             return {"message": "Could not get all trips"}
 
-    def create(self, trip: TripIn) -> Union[TripOut, Error]:
+    def create(self, trip: TripIn, user_id: int) -> Union[TripOut, Error]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our INSERT statement
                     result = db.execute(
                         """
                         INSERT INTO trips
                             (destination
                             , start_date
                             , end_date
-                            , attendees
-                            , image_url)
+                            , image_url
+                            , creator)
                         VALUES
                             (%s, %s, %s, %s, %s)
                         RETURNING id;
@@ -148,18 +133,18 @@ class TripRepository:
                             trip.destination,
                             trip.start_date,
                             trip.end_date,
-                            trip.attendees,
                             trip.image_url,
+                            user_id,
                         ],
                     )
                     id = result.fetchone()[0]
-                    return self.trip_in_to_out(id, trip)
+                    return self.trip_in_to_out(id, user_id, trip)
         except Exception:
             return {"message": "Create did not work"}
 
-    def trip_in_to_out(self, id: int, trip: TripIn):
+    def trip_in_to_out(self, id: int, user_id: int, trip: TripIn):
         old_data = trip.dict()
-        return TripOut(id=id, **old_data)
+        return TripOut(id=id, creator=user_id, **old_data)
 
     def record_to_trip_out(self, record):
         return TripOut(
@@ -167,6 +152,6 @@ class TripRepository:
             destination=record[1],
             start_date=record[2],
             end_date=record[3],
-            attendees=record[4],
-            image_url=record[5],
+            image_url=record[4],
+            creator=record[5],
         )
