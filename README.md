@@ -13,8 +13,9 @@ tasks for this week.
 * Black Formatter: <https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter>
 
 ## Design
-[Link to API Design](API_Design.md)
-[Link to Data Model](Data_Model.md)
+[Link to API Design](API_Design.md)0.<br>
+[Link to Data Model](Data_Model.md)<br>
+[Link to GHI](GHI.md)
 
 ## Deliverables
 
