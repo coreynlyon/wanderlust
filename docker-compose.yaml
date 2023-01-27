@@ -39,7 +39,7 @@ services:
     environment:
       DATABASE_URL: postgresql://user_service:password@postgres/user_service
       WAIT_HOSTS: postgres:5432
-      SIGNING_KEY: hackreactor123
+      SIGNING_KEY: Q64VLr6v3bDEylasF84us43SqKMz72AN
 
   trip_service:
     build:
@@ -52,6 +52,7 @@ services:
     environment:
       DATABASE_URL: postgresql://trip_service:password@postgres/trip_service
       WAIT_HOSTS: postgres:5432
+      SIGNING_KEY: Q64VLr6v3bDEylasF84us43SqKMz72AN
 
   ghi:
     image: node:lts-bullseye

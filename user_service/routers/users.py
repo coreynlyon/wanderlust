@@ -36,16 +36,6 @@ class HttpError(BaseModel):
 router = APIRouter()
 
 
-# for people who has to be logged in
-# @router.get("/api/protected", response_model=bool)
-# async def get_protected(
-#     #include queries
-#     user_data: dict = Depends(authenticator.get_current_account_data),
-# ):
-#     return True
-# will eventually need to implement for users to access
-
-
 not_authorized = HTTPException(
     status_code=status.HTTP_401_UNAUTHORIZED,
     detail="Invalid authentication credentials",

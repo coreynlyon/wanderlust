@@ -21,11 +21,8 @@ class ChecklistOut(BaseModel):
 class ChecklistRepository:
     def get_one(self, checklist_id: int) -> Optional[ChecklistOut]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our SELECT statement
                     result = db.execute(
                         """
                         SELECT id
@@ -40,15 +37,12 @@ class ChecklistRepository:
                     if record is None:
                         return None
                     return self.record_to_checklist_out(record)
-        except Exception as e:
-            print(e)
+        except Exception:
             return {"message": "Could not get that checklist"}
 
     def delete(self, checklist_id: int) -> bool:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     db.execute(
                         """
@@ -58,17 +52,14 @@ class ChecklistRepository:
                         [checklist_id],
                     )
                     return True
-        except Exception as e:
-            print(e)
+        except Exception:
             return False
 
     def update(
         self, checklist_id: int, checklist: ChecklistIn
     ) -> Union[ChecklistOut, Error]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     db.execute(
                         """
@@ -80,19 +71,15 @@ class ChecklistRepository:
                         [checklist.item_name, checklist.trip_id, checklist_id],
                     )
                     return self.checklist_in_to_out(checklist_id, checklist)
-        except Exception as e:
-            print(e)
+        except Exception:
             return {"message": "Could not update that checklist"}
 
     def get_checklist_by_trip_id(
         self, trip_id: int
     ) -> Union[List[ChecklistOut], Error]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our SELECT statement
                     result = db.execute(
                         """
                         SELECT id
@@ -107,19 +94,15 @@ class ChecklistRepository:
                         self.record_to_checklist_out(record)
                         for record in result
                     ]
-        except Exception as e:
-            print(e)
+        except Exception:
             return {
                 "message": "Could not get checklist item with that trip id"
             }
 
     def get_all(self) -> Union[List[ChecklistOut], Error]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our SELECT statement
                     result = db.execute(
                         """
                         SELECT id
@@ -132,17 +115,13 @@ class ChecklistRepository:
                         self.record_to_checklist_out(record)
                         for record in result
                     ]
-        except Exception as e:
-            print(e)
+        except Exception:
             return {"message": "Could not get all checklists"}
 
     def create(self, checklist: ChecklistIn) -> Union[ChecklistOut, Error]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our INSERT statement
                     result = db.execute(
                         """
                         INSERT INTO checklists
@@ -166,7 +145,6 @@ class ChecklistRepository:
         return ChecklistOut(id=id, **old_data)
 
     def record_to_checklist_out(self, record):
-        print(record)
         return ChecklistOut(
             id=record[0],
             item_name=record[1],

@@ -1,4 +1,4 @@
-# Module3 Project Gamma
+# Wanderlust
 
 ## Getting started
 
@@ -11,6 +11,11 @@ tasks for this week.
 
 * Prettier: <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>
 * Black Formatter: <https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter>
+
+## Design
+[Link to API Design](API_Design.md)0.<br>
+[Link to Data Model](Data_Model.md)<br>
+[Link to GHI](GHI.md)
 
 ## Deliverables
 
@@ -65,6 +70,8 @@ look like.
 The sample Dockerfile and Dockerfile.dev run your migrations
 for you automatically.
 
+
+
 ### Other files
 
 The following project files have been created as a minimal
@@ -96,7 +103,7 @@ deployment, but it just consists of these steps:
 * make sure this project is in a group. If it isn't, stop
   now and move it to a GitLab group
 * remove the fork relationship: In GitLab go to:
-  
+
   Settings -> General -> Advanced -> Remove fork relationship
 
 * add these GitLab CI/CD variables:

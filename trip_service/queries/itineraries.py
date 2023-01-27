@@ -30,18 +30,14 @@ class ItineraryOut(BaseModel):
     destination: Optional[str]
     start_date: Optional[date]
     end_date: Optional[date]
-    attendees: Optional[str]
     image_url: Optional[str]
 
 
 class ItineraryRepository:
     def get_one(self, itinerary_id: int) -> Optional[ItineraryOut]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our SELECT statement
                     result = db.execute(
                         """
                         SELECT i.id
@@ -55,7 +51,6 @@ class ItineraryRepository:
                              , t.destination
                              , t.start_date
                              , t.end_date
-                             , t.attendees
                              , t.image_url
                         FROM itineraries i
                         LEFT JOIN trips t ON (i.trip_id=t.id)
@@ -67,15 +62,12 @@ class ItineraryRepository:
                     if record is None:
                         return None
                     return self.record_to_itinerary_out(record)
-        except Exception as e:
-            print(e)
+        except Exception:
             return {"message": "Could not get that itinerary"}
 
     def delete(self, itinerary_id: int) -> bool:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     db.execute(
                         """
@@ -85,17 +77,14 @@ class ItineraryRepository:
                         [itinerary_id],
                     )
                     return True
-        except Exception as e:
-            print(e)
+        except Exception:
             return False
 
     def update(
         self, itinerary_id: int, itinerary: ItineraryIn
     ) -> Union[ItineraryOut, Error]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     db.execute(
                         """
@@ -121,17 +110,13 @@ class ItineraryRepository:
                         ],
                     )
                     return self.itinerary_in_to_out(itinerary_id, itinerary)
-        except Exception as e:
-            print(e)
+        except Exception:
             return {"message": "Could not update that itinerary"}
 
     def get_itin_by_trip_id(self, trip_id: int) -> Optional[ItineraryOut]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our SELECT statement
                     result = db.execute(
                         """
                             SELECT i.id
@@ -145,7 +130,6 @@ class ItineraryRepository:
                              , t.destination
                              , t.start_date
                              , t.end_date
-                             , t.attendees
                              , t.image_url
                             FROM itineraries i
                             LEFT JOIN trips t ON (i.trip_id=t.id)
@@ -157,17 +141,13 @@ class ItineraryRepository:
                         self.record_to_itinerary_out(record)
                         for record in result
                     ]
-        except Exception as e:
-            print(e)
+        except Exception:
             return {"message": "Could not get itinerary with that trip id"}
 
     def get_all(self) -> Union[List[ItineraryOut], Error]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our SELECT statement
                     result = db.execute(
                         """
                         SELECT i.id
@@ -181,7 +161,6 @@ class ItineraryRepository:
                              , t.destination
                              , t.start_date
                              , t.end_date
-                             , t.attendees
                              , t.image_url
                         FROM itineraries i
                         LEFT JOIN trips t ON (i.trip_id=t.id)
@@ -191,17 +170,13 @@ class ItineraryRepository:
                         self.record_to_itinerary_out(record)
                         for record in result
                     ]
-        except Exception as e:
-            print(e)
+        except Exception:
             return {"message": "Could not get all itineraries"}
 
     def create(self, itinerary: ItineraryIn) -> Union[ItineraryOut, Error]:
         try:
-            # connect the database
             with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our INSERT statement
                     result = db.execute(
                         """
                         INSERT INTO itineraries
@@ -228,16 +203,14 @@ class ItineraryRepository:
                     )
                     id = result.fetchone()[0]
                     return self.itinerary_in_to_out(id, itinerary)
-        except Exception as e:
-            # return {"message": "Create did not work"}
-            return Error(message=str(e))
+        except Exception:
+            return {"message": "Create did not work"}
 
     def itinerary_in_to_out(self, id: int, itinerary: ItineraryIn):
         old_data = itinerary.dict()
         return ItineraryOut(id=id, **old_data)
 
     def record_to_itinerary_out(self, record):
-        print(record)
         return ItineraryOut(
             id=record[0],
             depart_flight_num=record[1],
@@ -250,6 +223,5 @@ class ItineraryRepository:
             destination=record[8],
             start_date=record[9],
             end_date=record[10],
-            attendees=record[11],
-            image_url=record[12],
+            image_url=record[11],
         )

@@ -11,8 +11,7 @@ import {
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { NavLink } from 'react-router-dom';
-
-
+import { useAuthContext } from './Auth';
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -51,27 +50,49 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export default function Nav() {
+function Nav() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
   const { classes, theme } = useStyles();
+  const { token } = useAuthContext();
+
 
   return (
     <Box>
       <Header height={60} px="md">
-        <Group position="apart" sx={{ height: '100%' }}>
-          {/* <MantineLogo size={30} /> */}
-
-          <Group sx={{ height: '100%' }} spacing={0} className={classes.hiddenMobile}>
-            <NavLink to="/" className={classes.link}> Home </NavLink>
-            <NavLink to="/trips" className={classes.link}> View Trips </NavLink>
+        <Group position="apart" sx={{ height: "100%" }}>
+          <Group
+            sx={{ height: "100%" }}
+            spacing={0}
+            className={classes.hiddenMobile}>
+            <NavLink to="/" className={classes.link}>
+              {" "}
+              Home{" "}
+            </NavLink>
+            {token ? (
+              <NavLink to="/trips" className={classes.link}>
+                View Trips
+              </NavLink>
+            ) : null}
           </Group>
 
           <Group className={classes.hiddenMobile}>
-            <Button variant="default">Log in</Button>
-            <Button color="indigo">Sign up</Button>
+            <NavLink to={token ? "/logout" : "/login"}>
+              <Button to={token ? "/logout" : "/login"} variant="default">
+                {token ? "Logout" : "Log In"}
+              </Button>
+            </NavLink>
+            {token ? null : (
+              <NavLink to="/signup">
+                <Button color="indigo">Sign up</Button>
+              </NavLink>
+            )}
           </Group>
 
-          <Burger opened={drawerOpened} onClick={toggleDrawer} className={classes.hiddenDesktop} />
+          <Burger
+            opened={drawerOpened}
+            onClick={toggleDrawer}
+            className={classes.hiddenDesktop}
+          />
         </Group>
       </Header>
 
@@ -82,22 +103,43 @@ export default function Nav() {
         padding="md"
         title="Navigation"
         className={classes.hiddenDesktop}
-        zIndex={1000000}
-      >
-        <ScrollArea sx={{ height: 'calc(100vh - 60px)' }} mx="-md">
-          <Divider my="sm" color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'} />
+        zIndex={1000000}>
+        <ScrollArea sx={{ height: "calc(100vh - 60px)" }} mx="-md">
+          <Divider
+            my="sm"
+            color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
+          />
 
-          <NavLink to="/" className={classes.link}> Home </NavLink>
-          <NavLink to="/trips" className={classes.link}> View Trips </NavLink>
+          <NavLink to="/" className={classes.link}>
+            {" "}
+            Home{" "}
+          </NavLink>
+          {token ? (
+            <NavLink to="/trips" className={classes.link}>
+              View Trips
+            </NavLink>
+          ) : null}
 
-          <Divider my="sm" color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'} />
+          <Divider
+            my="sm"
+            color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
+          />
 
           <Group position="center" grow pb="xl" px="md">
-            <Button variant="default">Log in</Button>
-            <Button color="indigo">Sign up</Button>
+            <NavLink to={token ? "/logout" : "/login"}>
+              <Button to={token ? "/logout" : "/login"} variant="default">
+                {token ? "Logout" : "Log In"}
+              </Button>
+            </NavLink>
+            {token ? null : (
+              <NavLink to="/signup">
+                <Button color="indigo">Sign up</Button>
+              </NavLink>
+            )}
           </Group>
         </ScrollArea>
       </Drawer>
     </Box>
   );
 }
+export default Nav;
