@@ -165,6 +165,32 @@ Output:
 Creating a new checklist saves the id, item_name, trip_id.
 This adds a new checklist to related activity to the database which can be added or editied by a user.
 
+## viewers
+
+- **Method**: `POST`, `GET`, `PUT`
+- **Path**: `/wanderlust/trips`, `/trips`, `/trips/viewers`
+
+Input:
+
+```json
+{
+  "email": "string",
+  "trip_id": 0
+}
+```
+
+Output:
+
+```json
+{
+  "id": 0,
+  "email": "string",
+  "trip_id": 0
+}
+```
+
+Adding a new viewer saves the id and email with the trip_id.
+
 
 ## Token
 

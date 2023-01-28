@@ -79,6 +79,7 @@ def delete_trip(
         return "false"
 
 
+# trip details
 @router.get("/trips/{trip_id}", response_model=Optional[TripOut])
 def get_one_trip(
     trip_id: int,

@@ -46,6 +46,14 @@
 | item_name        | string | no     | no       |
 | trip_id          | int    | yes    | no       |
 
+### Viewers
+
+| name             | type   | unique | optional |
+| ---------------- | ------ | ------ | -------- |
+| id               | int    | yes    | no       |
+| email            | string | no     | no       |
+| trip_id          | int    | no     | no       |
+
 ### Reservation
 
 | name                         | type   | unique | optional |

@@ -12,5 +12,8 @@ class UserAuthenticator(Authenticator):
     def get_hashed_password():
         pass
 
+    def get_account_data_for_cookie():
+        pass
+
 
 authenticator = UserAuthenticator(os.environ["SIGNING_KEY"])
