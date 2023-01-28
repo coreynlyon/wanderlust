@@ -1,5 +1,5 @@
 import { Timeline, Text, Title, Button, ActionIcon, Flex } from "@mantine/core";
-import { IconStar, IconTrash } from "@tabler/icons";
+import { IconStar, IconTrash, IconEdit } from "@tabler/icons";
 import { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
@@ -13,26 +13,77 @@ function Activities() {
   const [date, setDate] = useState("");
   const [notes, setNotes] = useState("");
   const [show, setShow] = useState(false);
+  const [editShow, setEditShow] = useState(false);
+
   const [activities, setActivities] = useState([]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-    const handleDelete = (id) => async () => {
-        try {
-          const url = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/activities/${id}`;
-          const deleteResponse = await fetch(url, {
-            method: "delete",
-          });
+  const handleEditClose = () => setEditShow(false);
+  const handleEditShow = (activity) => {
+    console.log(activity);
+    setActivityId(activity.id);
+    setEditActivityName(activity.activity_name);
+    setEditPlace(activity.place);
+    setEditDate(activity.date);
+    setEditNotes(activity.notes);
+    setEditShow(true);
+  };
 
-          if (deleteResponse.ok) {
-            const updatedActvities = activities.filter(
-              (activity) => activity.id !== id
-            );
-            setActivities(updatedActvities);
-          }
-        } catch (err) {}
-      };
+  const [edit_activity_name, setEditActivityName] = useState("");
+  const [edit_place, setEditPlace] = useState("");
+  const [edit_date, setEditDate] = useState("");
+  const [edit_notes, setEditNotes] = useState("");
+  const [activity_id, setActivityId] = useState("");
+
+  const handleUpdate = (activity_id) => async (event) => {
+    console.log(activity_id);
+    event.preventDefault();
+    const trip_id = id;
+    const data = {
+      activity_name: edit_activity_name,
+      place: edit_place,
+      date: edit_date,
+      notes: edit_notes,
+      trip_id,
+    };
+    console.log(data);
+
+    const activityUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/activities/${activity_id}`;
+    const fetchConfig = {
+      method: "put",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const response = await fetch(activityUrl, fetchConfig);
+    if (response.ok) {
+      setEditShow(false);
+      const reloadUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/activities/trip/${id}`;
+      const reloadResponse = await fetch(reloadUrl);
+      const newActivities = await reloadResponse.json();
+      setActivities(newActivities);
+    }
+  };
+
+  const handleDelete = (id) => async () => {
+    try {
+      const url = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/activities/${id}`;
+      const deleteResponse = await fetch(url, {
+        method: "delete",
+      });
+
+      if (deleteResponse.ok) {
+        const updatedActvities = activities.filter(
+          (activity) => activity.id !== id
+        );
+        setActivities(updatedActvities);
+      }
+    } catch (err) {}
+  };
 
   useEffect(() => {
     const fetchActivity = async () => {
@@ -82,11 +133,7 @@ function Activities() {
       <div className="container mt-3 text-center">
         <Title className="mb-3">Schedule</Title>
         <>
-          <Button
-            variant="light"
-            color="indigo"
-            size="md"
-            onClick={handleShow}>
+          <Button variant="light" color="indigo" size="md" onClick={handleShow}>
             Add an activity
           </Button>
 
@@ -175,13 +222,99 @@ function Activities() {
                     wrap="wrap">
                     {activity.place}
                     <div>
-                      <ActionIcon
-                        variant="transparent"
-                        color="red"
-                        size="xs"
-                        onClick={handleDelete(activity.id)}>
-                        <IconTrash size={14} />
-                      </ActionIcon>
+                      <Flex>
+                        <ActionIcon
+                          variant="transparent"
+                          color="red"
+                          size="xs"
+                          onClick={handleDelete(activity.id)}>
+                          <IconTrash size={14} />
+                        </ActionIcon>
+                        <ActionIcon
+                          variant="transparent"
+                          color="blue"
+                          size="xs"
+                          onClick={() => handleEditShow(activity)}>
+                          <IconEdit size={14} />
+                        </ActionIcon>
+                      </Flex>
+                      <>
+                        <Modal show={editShow} onHide={handleEditClose}>
+                          <Modal.Header closeButton>
+                            <Modal.Title>Edit activity</Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body>
+                            <Form id="activity-form">
+                              <Form.Group className="mb-3">
+                                <Form.Label>Activity Name</Form.Label>
+                                <Form.Control
+                                  onChange={(e) =>
+                                    setEditActivityName(e.target.value)
+                                  }
+                                  placeholder="Enter an activity name"
+                                  required
+                                  type="text"
+                                  name="activity_name"
+                                  id="activity_name"
+                                  autoFocus
+                                  defaultValue={edit_activity_name}
+                                />
+                              </Form.Group>
+                              <Form.Group className="mb-3">
+                                <Form.Label>Place</Form.Label>
+                                <Form.Control
+                                  onChange={(e) => setEditPlace(e.target.value)}
+                                  required
+                                  type="text"
+                                  placeholder="Enter a place"
+                                  name="place"
+                                  id="place"
+                                  defaultValue={edit_place}
+                                  autoFocus
+                                />
+                              </Form.Group>
+                              <Form.Group className="mb-3">
+                                <Form.Label>Date</Form.Label>
+                                <Form.Control
+                                  onChange={(e) => setEditDate(e.target.value)}
+                                  required
+                                  type="date"
+                                  name="date"
+                                  id="date"
+                                  defaultValue={edit_date}
+                                  autoFocus
+                                />
+                              </Form.Group>
+                              <Form.Group className="mb-3">
+                                <Form.Label>Notes</Form.Label>
+                                <Form.Control
+                                  onChange={(e) => setEditNotes(e.target.value)}
+                                  placeholder="Add notes"
+                                  type="text"
+                                  name="notes"
+                                  id="notes"
+                                  defaultValue={edit_notes}
+                                  autoFocus
+                                />
+                              </Form.Group>
+                            </Form>
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <Button
+                              variant="light"
+                              color="indigo"
+                              onClick={handleEditClose}>
+                              Close
+                            </Button>
+                            <Button
+                              variant="primary"
+                              color="indigo"
+                              onClick={handleUpdate(activity_id)}>
+                              Edit Activity
+                            </Button>
+                          </Modal.Footer>
+                        </Modal>
+                      </>
                     </div>
                   </Flex>
                 </Text>
@@ -189,7 +322,7 @@ function Activities() {
                   {activity.notes}
                 </Text>
                 <Text size="xs" mt={4}>
-                    {new Date(activity.date).toLocaleDateString()}
+                  {new Date(activity.date).toLocaleDateString()}
                 </Text>
               </Timeline.Item>
             );

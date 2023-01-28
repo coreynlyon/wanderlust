@@ -6,7 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 
 export default function ItineraryComponent() {
   const tripId = useParams();
-  const id = Number(tripId.id);
+  let id = Number(tripId.id);
   const [depart_flight_num, setDepartFlightNum] = useState("");
   const [depart_flight_airline, setDepartFlightAirline] = useState("");
   const [depart_flight_date, setDepartFlightDate] = useState("");
@@ -31,6 +31,28 @@ export default function ItineraryComponent() {
     };
     fetchItinerary();
   }, [id]);
+
+
+  const handleDelete = (id) => async () => {
+    try {
+      const url = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/itineraries/${id}`;
+      const deleteResponse = await fetch(url, {
+        method: "delete",
+      });
+
+      if (deleteResponse.ok) {
+            const fetchItinerary = async () => {
+              const url = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/itineraries/trip/${id}`;
+              const response = await fetch(url);
+              if (response.ok) {
+                const data = await response.json();
+                setItinerary(data[0]);
+              }
+            };
+            fetchItinerary();
+      }
+    } catch (err) {}
+  };
 
   const handleSubmit = async (event) => {
       event.preventDefault();
@@ -75,29 +97,41 @@ export default function ItineraryComponent() {
           Flight Info
         </Title>
         {itinerary ? (
-          <Text>
-            Departing Flight: {itinerary.depart_flight_airline}{" "}
-            {itinerary.depart_flight_num}
-            <br />{" "}
-            {new Date(itinerary.depart_flight_date).toLocaleString("en-US", {
-              year: "numeric",
-              month: "numeric",
-              day: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
+          <>
+            <Text>
+              Departing Flight: {itinerary.depart_flight_airline}{" "}
+              {itinerary.depart_flight_num}
+              <br />{" "}
+              {new Date(itinerary.depart_flight_date).toLocaleString("en-US", {
+                year: "numeric",
+                month: "numeric",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+              <br />
+              <br /> Return Flight: {itinerary.return_flight_airline}{" "}
+              {itinerary.return_flight_num}
+              <br />{" "}
+              {new Date(itinerary.return_flight_date).toLocaleString("en-US", {
+                year: "numeric",
+                month: "numeric",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </Text>
             <br />
-            <br /> Return Flight: {itinerary.return_flight_airline}{" "}
-            {itinerary.return_flight_num}
-            <br />{" "}
-            {new Date(itinerary.return_flight_date).toLocaleString("en-US", {
-              year: "numeric",
-              month: "numeric",
-              day: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </Text>
+            <Button
+              variant="light"
+              radius="xl"
+              color="red"
+              onClick={handleDelete(itinerary.id)}>
+              Delete Flight Info
+            </Button>
+            <Text>
+            </Text>
+          </>
         ) : (
           <Text>
             <br />
