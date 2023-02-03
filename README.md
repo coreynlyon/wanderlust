@@ -1,155 +1,124 @@
 # Wanderlust
+Say goodbye to the stress of planning your next adventure and hello to Wanderlust, the ultimate travel companion that takes care of all your itinerary needs!
 
-## Getting started
-
-You have a project repository, now what? The next section
-lists all of the deliverables that are due at the end of the
-week. Below is some guidance for getting started on the
-tasks for this week.
-
-## Install Extensions
-
-* Prettier: <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>
-* Black Formatter: <https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter>
+## Group
+- Nate Seon
+- Tracey Chung
+- Corey Lyon
+- Caleb Lee
+- Bette La
 
 ## Design
+[Link to Wireframes](docs/wireframes/wireframe.png)
+
+
+## API design
 [Link to API Design](API_Design.md)<br>
+
+
+## Data model
 [Link to Data Model](Data_Model.md)<br>
-[Link to GHI](GHI.md)<br>
-[Link to Wireframes](docs/wireframes/)
-
-## Deliverables
-
-* [ ] Wire-frame diagrams
-* [ ] API documentation
-* [ ] Project is deployed to Render.com/GitLab-pages
-* [ ] GitLab issue board is setup and in use
-* [ ] Journals
-
-## Project layout
-
-The layout of the project is just like all of the projects
-you did with `docker-compose` in module #2. You will create
-a directory in the root of the repository for each service
-that you add to your project just like those previous
-projects were setup.
-
-### Directories
-
-Several directories have been added to your project. The
-directories `docs` and `journals` are places for you and
-your team-mates to, respectively, put any documentation
-about your project that you create and to put your
-project-journal entries. See the _README.md_ file in each
-directory for more info.
-
-The other directories, `ghi` and `sample_service`, are
-sample services, that you can start building off of or use
-as a reference point.
-
-Inside of `ghi` is a minimal React app that has an "under
-construction" page. It is setup similarly to all of the
-other React projects that you have worked on.
-
-Inside of `sample_service` is a minimal FastAPI application.
-"Where are all the files?" you might ask? Well, the
-`main.py` file is the whole thing, and go take look inside
-of it... There's not even much in there..., hmm? That is
-FastAPI, we'll learn more about it in the coming days. Can
-you figure out what this little web-application does even
-though you haven't learned about FastAPI yet?
-
-Also in `sample_service` is a directory for your migrations.
-If you choose to use PostgreSQL, then you'll want to use
-migrations to control your database. Unlike Django, where
-migrations were automatically created for you, you'll write
-yours by hand using DDL. Don't worry about not knowing what
-DDL means; we have you covered. There's a sample migration
-in there that creates two tables so you can see what they
-look like.
-
-The sample Dockerfile and Dockerfile.dev run your migrations
-for you automatically.
 
 
+## GHI
+[Link to GHI](docs/ghi-design.md)<br>
 
-### Other files
 
-The following project files have been created as a minimal
-starting point. Please follow the guidance for each one for
-a most successful project.
+## Intended market
+We are primarily focused on catering towards consumers who are finding ways to optimize itinerary planning and distribution. Consumers who love to travel, but have a hard time empirically planning trips out.
 
-* `docker-compose.yaml`: there isn't much in here, just a
-  **really** simple UI and FastAPI service. Add services
-  (like a database) to this file as you did with previous
-  projects in module #2.
-* `.gitlab-ci.yml`: This is your "ci/cd" file where you will
-  configure automated unit tests, code quality checks, and
-  the building and deployment of your production system.
-  Currently, all it does is deploy an "under construction"
-  page to your production UI on GitLab and a sample backend
-  to Render.com. We will learn much more about this file.
-* `.gitignore`: This is a file that prevents unwanted files
-  from getting added to your repository, files like
-  `pyc` files, `__pycache__`, etc. We've set it up so that
-  it has a good default configuration for Python projects.
+## Functionality
 
-## How to complete the initial deploy
+1. As a user, I can login/sign up so I can access the app.
+2. As a user, I am able to create/edit itinerary form for trip and share with other users to view so that a group can plan the trip.
+3. As a user, I can be invited to view a trip made by a different user.
+4. A trip owner can add/edit activities via the activity form to add/remove activities to an itinerary.
+5. A trip owner can add/edit items in the packing list form to add/remove list of needed items for a given activity.
+6. All members of a group have access to the itineraries list page, where once trip owner submits the forms, everyone in the group can access.
+7. A trip owner can edit/delete itineraries and their relevant activities and packing lists in the itineraries list page.
 
-There will be further guidance on completing the initial
-deployment, but it just consists of these steps:
 
-### Setup GitLab repo/project
+## Project Initialization
+To fully enjoy this application on your local machine, please make sure to follow these steps:
 
-* make sure this project is in a group. If it isn't, stop
-  now and move it to a GitLab group
-* remove the fork relationship: In GitLab go to:
+- Clone the repository down to your local machine
+- CD into the new project directory
 
-  Settings -> General -> Advanced -> Remove fork relationship
+```
+docker volume create postgres-data
+docker volume create pg-admin
+docker volume create jwtdown-db-data
+docker compose build
+docker compose up
+```
 
-* add these GitLab CI/CD variables:
-  * PUBLIC_URL : this is your gitlab pages URL
-  * SAMPLE_SERVICE_API_HOST: enter "blank" for now
+## Backend Endpoints
 
-#### Your GitLab pages URL
+- Trips: [http://localhost:8100](http://localhost:8100/)
+- Users: [http://localhost:8090](http://localhost:8090)
 
-You can't find this in GitLab until after you've done a deploy
-but you can figure it out yourself from your GitLab project URL.
+### Trips
+| HTTP Request | URL                                                                | Method               |
+| ------------ | ------------------------------------------------------------------ | -------------------- |
+| GET          | [http://localhost:8100/trips](http://localhost:8100/trips)         | Get all trips        |
+| POST         | [http://localhost:8100/trips](http://localhost:8100/trips)         | Create new trip      |
+| PUT          | [http://localhost:8100/trips/:id](http://localhost:8100/trips/:id) | Delete specific trip |
+| DELETE       | [http://localhost:8100/trips/:id](http://localhost:8100/trips/:id) | Update specific trip |
+| GET          | [http://localhost:8100/trips/:id](http://localhost:8100/trips/:id) | Get specific trip    |
 
-If this is your project URL
+### Viewers
+| HTTP Request | URL                                              | Method             |
+| ------------ | ------------------------------------------------ | ------------------ |
+| POST         | [http://localhost:8100/](http://localhost:8100/) | Add viewer to trip |
 
-https://gitlab.com/GROUP_NAME/PROJECT_NAME
+### Itineraries
+| HTTP Request | URL                                                                            | Method                    |
+| ------------ | ------------------------------------------------------------------------------ | ------------------------- |
+| GET          | [http://localhost:8100/itineraries](http://localhost:8100/itineraries)         | Get all itineraries       |
+| POST         | [http://localhost:8100/itineraries](http://localhost:8100/itineraries)         | Create new itinerary      |
+| PUT          | [http://localhost:8100/itineraries/:id](http://localhost:8100/itineraries/:id) | Delete specific itinerary |
+| DELETE       | [http://localhost:8100/itineraries/:id](http://localhost:8100/itineraries/:id) | Update specific itinerary |
+| GET          | [http://localhost:8100/itineraries/:id](http://localhost:8100/itineraries/:id) | Get specific itinerary    |
 
-then your GitLab pages URL will be
+### Activities
+| HTTP Request | URL                                                                          | Method                   |
+| ------------ | ---------------------------------------------------------------------------- | ------------------------ |
+| GET          | [http://localhost:8100/activities](http://localhost:8100/activities)         | Get all activities       |
+| POST         | [http://localhost:8100/activities](http://localhost:8100/activities)         | Create new activity      |
+| PUT          | [http://localhost:8100/activities/:id](http://localhost:8100/activities/:id) | Delete specific activity |
+| DELETE       | [http://localhost:8100/activities/:id](http://localhost:8100/activities/:id) | Update specific activity |
+| GET          | [http://localhost:8100/activities/:id](http://localhost:8100/activities/:id) | Get specific activity    |
 
-https://GROUP_NAME.gitlab.io/PROJECT_NAME
+### Checklists
+| HTTP Request | URL                                                                          | Method                    |
+| ------------ | ---------------------------------------------------------------------------- | ------------------------- |
+| GET          | [http://localhost:8100/checklists](http://localhost:8100/checklists)         | Get all checklists        |
+| POST         | [http://localhost:8100/checklists](http://localhost:8100/checklists)         | Create new checklist      |
+| PUT          | [http://localhost:8100/checklists/:id](http://localhost:8100/checklists/:id) | Delete specific checklist |
+| DELETE       | [http://localhost:8100/checklists/:id](http://localhost:8100/checklists/:id) | Update specific checklist |
+| GET          | [http://localhost:8100/checklists/:id](http://localhost:8100/checklists/:id) | Get specific checklist    |
 
-### Create render.com account and application
+### Reservations
+| HTTP Request | URL                                                                              | Method                      |
+| ------------ | -------------------------------------------------------------------------------- | --------------------------- |
+| GET          | [http://localhost:8100/reservations](http://localhost:8100/reservations)         | Get all reservations        |
+| POST         | [http://localhost:8100/reservations](http://localhost:8100/reservations)         | Create new reservation      |
+| PUT          | [http://localhost:8100/reservations/:id](http://localhost:8100/reservations/:id) | Delete specific reservation |
+| DELETE       | [http://localhost:8100/reservations/:id](http://localhost:8100/reservations/:id) | Update specific reservation |
+| GET          | [http://localhost:8100/reservations/:id](http://localhost:8100/reservations/:id) | Get specific reservation    |
 
-* create account on render.com
-* one person create a group and invite all other members
-* create a new "Web Service"
-  * authenticate with GitLab and choose your project
-  * Enter fields:
-    * Name: name of your service
-    * Root Directory: the directory of your service in your git repo.
-      For this example use "sample_service".
-    * Environment: Docker
-    * Plan Type: Free
-  * click the "Create Web Service" button to create it
-  * the build will succeed and it will look like the server is running,
-    most likely, in 6-10 minutes, it will fail.
-  * click "Manual Deploy" -> "Deploy latest commit" and the service
-    should deploy successfully.
+### Users
+| HTTP Request | URL                                                                | Method               |
+| ------------ | ------------------------------------------------------------------ | -------------------- |
+| GET          | [http://localhost:8090/users](http://localhost:8090/users)         | Get all users        |
+| POST         | [http://localhost:8090/users](http://localhost:8090/users)         | Create new user      |
+| PUT          | [http://localhost:8090/users/:id](http://localhost:8090/users/:id) | Delete specific user |
+| DELETE       | [http://localhost:8090/users/:id](http://localhost:8090/users/:id) | Update specific user |
+| GET          | [http://localhost:8090/users/:id](http://localhost:8090/users/:id) | Get specific user    |
+| GET          | [http://localhost:8090/token](http://localhost:8090/token)         | Get user token       |
 
-### Update GitLab CI/CD variables
+---
 
-Copy the service URL for your new render.com service and then paste
-that into the value for the SAMPLE_SERVICE_API_HOST CI/CD variable
-in GitLab.
+### Front End Endpoint:
 
-### Deploy it
-
-Merge a change into main to kick off the initial deploy. Once the build pipeline
-finishes you should be able to see an "under construction" page on your GitLab
-pages site.
+- React: [http://localhost:3000](http://localhost:3000/)

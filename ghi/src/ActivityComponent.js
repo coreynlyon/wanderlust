@@ -22,7 +22,6 @@ function Activities() {
 
   const handleEditClose = () => setEditShow(false);
   const handleEditShow = (activity) => {
-    console.log(activity);
     setActivityId(activity.id);
     setEditActivityName(activity.activity_name);
     setEditPlace(activity.place);
@@ -38,7 +37,6 @@ function Activities() {
   const [activity_id, setActivityId] = useState("");
 
   const handleUpdate = (activity_id) => async (event) => {
-    console.log(activity_id);
     event.preventDefault();
     const trip_id = id;
     const data = {
@@ -48,7 +46,6 @@ function Activities() {
       notes: edit_notes,
       trip_id,
     };
-    console.log(data);
 
     const activityUrl = `${process.env.REACT_APP_TRIP_SERVICE_API_HOST}/activities/${activity_id}`;
     const fetchConfig = {

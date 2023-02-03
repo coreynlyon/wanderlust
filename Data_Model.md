@@ -12,7 +12,7 @@
 | destination      | string | no     | no       |
 | start_date       | date   | no     | no       |
 | end_date         | date   | no     | no       |
-| image_url        | string | no     | no       |
+| image_url        | string | no     | yes      |
 
 ### Itinerary
 
@@ -35,7 +35,7 @@
 | activity_name    | string | no     | no       |
 | date             | date   | no     | no       |
 | place            | string | no     | no       |
-| notes            | string | no     | no       |
+| notes            | string | no     | yes      |
 | trip_id          | int    | yes    | no       |
 
 ### Checklist
